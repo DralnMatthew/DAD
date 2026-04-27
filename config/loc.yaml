@@ -9,7 +9,7 @@ batch_size: 2000
 eval_size: 100
 L: 2000
 M: 2000
-T: 30
+T: 20
 lr: 5e-5
 loss: PCELoss
 seed: 123
@@ -26,8 +26,7 @@ file_name: loc.pth
 eval_batch_size: 100
 eval_L: 1000000
 eval_M: 2000
-eval_T: 30
-
+eval_T: 20
 
 ##### W&B config #####
 wandb:
