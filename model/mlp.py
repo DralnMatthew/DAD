@@ -176,19 +176,17 @@ class SetEquivariantDesignNetwork(nn.Module):
 
         theta = experiment.sample_theta((M, ))
 
-        # history of an experiment
-        xi_designs = torch.empty((M, T, self.dim_x))  # raw designs [M, T, D_x]
+        xi_full = torch.empty((M, T, self.dim_x))   # raw encoder inputs
+        xi_designs = torch.empty((M, T, self.dim_x))  # design-space values [M, T, D_x]
         y_outcomes = torch.empty((M, T, self.dim_y))  # [M, T, D_y]
 
-        # T-steps experiment
         for t in range(T):
-            xi = self.forward(xi_designs[:, :t], y_outcomes[:, :t])     # [B, D_x]
-            y = experiment(experiment.to_design_space(xi), theta)                                   # [B, D_y]
+            xi = self.forward(xi_full[:, :t], y_outcomes[:, :t])  # [M, D_x]
+            xi_design = experiment.to_design_space(xi)             # constraint + transform to design space [M, D_x]
+            y = experiment(xi_design, theta)                       # [M, D_y]
 
-            xi_designs[:, t] = xi
+            xi_full[:, t] = xi
+            xi_designs[:, t] = xi_design
             y_outcomes[:, t] = y
-
-        # convert designs to design space
-        xi_designs = experiment.to_design_space(xi_designs)
 
         return theta, xi_designs, y_outcomes

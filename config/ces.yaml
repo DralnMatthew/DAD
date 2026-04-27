@@ -4,13 +4,13 @@ defaults:
   - data/ces
   - model/mlp_ces
 
-max_epoch: 50000
+max_epoch: 2000
 batch_size: 100
 eval_size: 100
-L: 1024
-M: 100
+L: 99999
+M: 500
 T: 10
-lr: 1e-4
+lr: 5e-5
 loss: PCELoss
 seed: 123
 fix_seed: True

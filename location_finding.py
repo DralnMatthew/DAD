@@ -144,9 +144,9 @@ def main(cfg):
         encoder = EncoderNetwork(cfg.data.dim_design, cfg.data.dim_outcome, hidden_dim=cfg.model.hidden_dim, encoding_dim=cfg.model.encoding_dim, hidden_depth=cfg.model.encoder_hidden_depth, activation=nn.ReLU())
         emitter = EmitterNetwork(cfg.model.encoding_dim, cfg.data.dim_design, hidden_dim=cfg.model.hidden_dim, hidden_depth=cfg.model.emitter_hidden_depth, activation=nn.Identity())
         model = SetEquivariantDesignNetwork(
-            encoder, emitter, 
-            cfg.data.dim_design, cfg.data.dim_outcome, 
-            empty_value=torch.ones(cfg.data.dim_design) * 0.01
+            encoder, emitter,
+            cfg.data.dim_design, cfg.data.dim_outcome,
+            empty_value=torch.ones(cfg.model.encoding_dim) * 0.01
         )
     else:
         raise ValueError(f"Model {cfg.model.name} not supported")

@@ -78,9 +78,8 @@ class CES(BED):
         return theta
     
     def to_design_space(self, xi):
-        """Clamp design to [0, 100]"""
-        # xi = torch.clamp(xi, min=0, max=self.design_scale)
-        return xi
+        """Clamp design to [0.01, design_scale]"""
+        return torch.clamp(xi, min=0.01, max=float(self.design_scale))
 
 
     def utility(self, x, rho, alpha):
@@ -122,15 +121,16 @@ class CES(BED):
         Returns:
             preference rating [B, 1] or [B, T, 1]
         """
+        xi = self.to_design_space(xi)
+
         # Extract parameters
         rho = theta[..., 0:1]  # [B, (T), 1]
         alpha = theta[..., 1:4]  # [B, (T), 3]
-        log_u = theta[..., 4:5]  # [B, (T), 1]
+        log_u = torch.clamp(theta[..., 4:5], min=-10.0, max=10.0)  # [B, (T), 1]
         u = torch.exp(log_u)
 
         basket1 = xi[..., :self.basket_dim]  # [B, (T), 3]
         basket2 = xi[..., self.basket_dim:]  # [B, (T), 3]
-        
 
         # Calculate utility for each basket
         u1 = self.utility(basket1, rho, alpha)  # [B, 1] or [B, T, 1]
@@ -145,7 +145,7 @@ class CES(BED):
         # Calculate the standard deviation (noise level)
         basket_diff = basket1 - basket2
         basket_dist = torch.norm(basket_diff, dim=-1, keepdim=True)  # [B, 1] or [B, T, 1]
-        sigma_eta = (1 + basket_dist) * self.noise_scale * u  # [B, 1] or [B, T, 1]
+        sigma_eta = torch.clamp((1 + basket_dist) * self.noise_scale * u, min=1e-6, max=1e6)
 
         y = CensoredSigmoidNormal(mu_eta, sigma_eta, self.epsilon, 1-self.epsilon).rsample()
 
@@ -162,16 +162,11 @@ class CES(BED):
         Returns:
             log likelihood [L, B, T, 1]
         """
-        # Extract parameters
-        # if theta.shape[-1] != 1:
-        #     theta = theta.unsqueeze(-1)         # [L, B, 5, 1]
+        xi = self.to_design_space(xi)
 
         rho = theta[..., 0:1]  # [L, B, (T), 1]
         alpha = theta[..., 1:4]  # [L, B, (T), 3]
-        log_u = theta[..., 4:5]  # [L, B, (T), 1]
-        # clamp log_u to avoid overflow
-        # log_u = torch.clamp(log_u, max=5)
-
+        log_u = torch.clamp(theta[..., 4:5], min=-10.0, max=10.0)  # [L, B, (T), 1]
         u = torch.exp(log_u)
 
         # Split the input into two baskets
@@ -186,15 +181,12 @@ class CES(BED):
         utility_diff = u1 - u2  # [L, B, T, 1]
 
         # Calculate the mean and std of the response distribution
-        mu_eta = utility_diff * u  # [L, B, T, 1]
+        mu_eta = torch.clamp(utility_diff * u, min=-1e4, max=1e4)  # [L, B, T, 1]
 
         # Calculate the standard deviation (noise level)
         basket_diff = basket1 - basket2
         basket_dist = torch.norm(basket_diff, dim=-1, keepdim=True)  # [L, B, T, 1]
-        sigma_eta = (1 + basket_dist) * self.noise_scale * u  # [L, B, T, 1]
-
-        
-        mu_eta = torch.clamp(mu_eta, min=-1e4, max=1e4)
+        sigma_eta = torch.clamp((1 + basket_dist) * self.noise_scale * u, min=1e-6, max=1e6)
 
         log_prob = CensoredSigmoidNormal(mu_eta, sigma_eta, self.epsilon, 1-self.epsilon).log_prob(y)
 
