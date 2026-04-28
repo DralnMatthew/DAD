@@ -4,7 +4,7 @@
 #SBATCH --mem=50G
 #SBATCH --nodes=1
 #SBATCH --output=out/%x_%j_%a.txt
-#SBATCH --job-name=location
+#SBATCH --job-name=ces
 #SBATCH --array=1
 #SBATCH --gpus=1
 #SBATCH --partition=gpu-h100-80g
