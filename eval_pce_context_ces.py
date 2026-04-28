@@ -344,7 +344,7 @@ def main():
     }
     for name, b in results.items():
         payload[name] = {
-            "pce_mean": b.pce_mean, "pce_se": b.pce_se,
+            "pce_mean": b.pce_mean, "pce_std": b.pce_se,
             "nmc_mean": b.nmc_mean, "nmc_se": b.nmc_se,
         }
     torch.save(payload, pt_path)

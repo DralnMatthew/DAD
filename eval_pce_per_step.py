@@ -141,7 +141,7 @@ def main():
         "device": device,
         "step": torch.arange(1, T + 1),
         "pce_mean": bounds.pce_mean.cpu(),
-        "pce_se": bounds.pce_se.cpu(),
+        "pce_std": bounds.pce_se.cpu(),
         "nmc_mean": bounds.nmc_mean.cpu(),
         "nmc_se": bounds.nmc_se.cpu(),
         "config": OmegaConf.to_container(cfg, resolve=True),
