@@ -1,0 +1,18 @@
+-------------------------------------------------------------------------------
+There are messages associated with the following module(s):
+-------------------------------------------------------------------------------
+
+PyTorch/2.7.1-rocm-6.2.4-python-3.12-singularity-20250827:
+   Though this container is based on a version of ROCm that is officially
+   supported by the ROCm driver on the system, we cannot exclude that there
+   will be problems when, e.g., the container integrates with the Cray PE as
+   it may be trying to link to libraries that were meant to be used with a
+   different version of ROCm. In particular, we expect that mpi4py may
+   produce warnings.
+
+-------------------------------------------------------------------------------usage: eval_pce_context_ces.py [-h] --model_path MODEL_PATH
+                               [--config_path CONFIG_PATH]
+                               [--output_path OUTPUT_PATH] [--T T]
+                               [--T_src T_SRC] [--L L] [--M M]
+                               [--batch_size BATCH_SIZE] [--device DEVICE]
+eval_pce_context_ces.py: error: the following arguments are required: --model_path

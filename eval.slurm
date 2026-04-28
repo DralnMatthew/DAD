@@ -21,4 +21,5 @@ module load PyTorch/2.7.1-rocm-6.2.4-python-3.12-singularity-20250827
 
 cd /scratch/project_462001370/DAD
 
-python eval_pce_per_step.py --model_path /scratch/project_462001370/DAD/outputs/hydra/2026-04-27/17-17-55/model/loc.pth
+# python eval_pce_per_step.py --model_path /scratch/project_462001370/DAD/outputs/hydra/2026-04-27/17-17-55/model/loc.pth
+python eval_pce_context_ces.py --model_path /scratch/project_462001370/DAD/outputs/hydra/2026-04-27/17-10-47/model/ces.pth

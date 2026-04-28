@@ -1,0 +1,73 @@
+-------------------------------------------------------------------------------
+There are messages associated with the following module(s):
+-------------------------------------------------------------------------------
+
+PyTorch/2.7.1-rocm-6.2.4-python-3.12-singularity-20250827:
+   Though this container is based on a version of ROCm that is officially
+   supported by the ROCm driver on the system, we cannot exclude that there
+   will be problems when, e.g., the container integrates with the Cray PE as
+   it may be trying to link to libraries that were meant to be used with a
+   different version of ROCm. In particular, we expect that mpi4py may
+   produce warnings.
+
+-------------------------------------------------------------------------------[2026-04-27 12:43:56](eval_location_checkpoint.py 46): INFO Loading checkpoint from /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-25/02-28-20/ckpt.tar
+[2026-04-27 12:44:07](eval_location_checkpoint.py 55): INFO Running checkpoint eval with config:
+max_epoch: 20000
+batch_size: 200
+eval_size: 100
+L: 19999
+M: 500
+T: 20
+lr: 5.0e-05
+loss: PCELoss
+seed: 1234
+fix_seed: true
+clip_grads: true
+verbose: 50
+device: cuda
+output_dir: /scratch/project_462001370/DAD/outputs/hydra/2026-04-25/02-28-20/eval_T20
+checkpoint: 500
+checkpoint_name: ckpt.tar
+file_name: loc.pth
+eval_batch_size: 100
+eval_L: 1000000
+eval_M: 1000
+eval_T: 20
+eval_heavy_every: 0
+heavy_eval_likelihood_eval_milestones:
+- 500000
+- 5000000
+- 50000000
+- 500000000
+save_milestone_checkpoints: true
+save_milestone_eval_bounds: true
+checkpoint_path: /scratch/project_462001370/DAD/outputs/hydra/2026-04-25/02-28-20/ckpt.tar
+use_checkpoint_config: true
+eval_output_prefix: loc_T20_everystep
+wandb:
+  group: Location
+  project: DAD
+  use_wandb: true
+  run_name: Location-2D2K-2026-04-25_02-28
+  tag: mlp
+data:
+  name: Location
+  K: 2
+  dim_design: 2
+  dim_outcome: 1
+  design_scale: 1
+  theta_dist: uniform
+  noise_scale: 0.5
+  base_signal: 0.1
+  max_signal: 0.0001
+model:
+  name: MLP
+  encoding_dim: 16
+  hidden_dim: 256
+  encoder_hidden_depth: 2
+  emitter_hidden_depth: 1
+
+[2026-04-27 12:44:26](eval_location_checkpoint.py 102): INFO Checkpoint eval complete: sPCE=9.1342+-0.0663, sNMC=9.1951+-0.0694
+[2026-04-27 12:44:26](eval_location_checkpoint.py 106): INFO Saved summary to /scratch/project_462001370/DAD/outputs/hydra/2026-04-25/02-28-20/eval_T20/eval/loc_T20_everystep_summary.json
+[2026-04-27 12:44:26](eval_location_checkpoint.py 107): INFO Saved full bounds to /scratch/project_462001370/DAD/outputs/hydra/2026-04-25/02-28-20/eval_T20/eval/loc_T20_everystep_bounds.tar
+Saved per-step PCE bounds to /scratch/project_462001370/DAD/outputs/hydra/2026-04-25/02-28-20/eval_T20/eval/loc_T20_everystep_bounds.pt

@@ -1,0 +1,107 @@
+-------------------------------------------------------------------------------
+There are messages associated with the following module(s):
+-------------------------------------------------------------------------------
+
+PyTorch/2.7.1-rocm-6.2.4-python-3.12-singularity-20250827:
+   Though this container is based on a version of ROCm that is officially
+   supported by the ROCm driver on the system, we cannot exclude that there
+   will be problems when, e.g., the container integrates with the Cray PE as
+   it may be trying to link to libraries that were meant to be used with a
+   different version of ROCm. In particular, we expect that mpi4py may
+   produce warnings.
+
+-------------------------------------------------------------------------------[2026-04-27 17:10:58](ces.py 129): INFO Running with config:
+{'max_epoch': 2000, 'batch_size': 100, 'eval_size': 100, 'L': 99999, 'M': 500, 'T': 10, 'lr': 5e-05, 'loss': 'PCELoss', 'seed': 123, 'fix_seed': True, 'clip_grads': True, 'verbose': 50, 'device': 'cuda', 'output_dir': '/pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/17-10-47', 'checkpoint': 500, 'checkpoint_name': 'ckpt.tar', 'file_name': 'ces.pth', 'eval_batch_size': 20, 'eval_L': 10000000, 'eval_M': 2000, 'eval_T': 10, 'wandb': {'group': '${data.name}', 'project': 'DAD', 'use_wandb': True, 'run_name': '${data.name}-${data.dim_design}D-${now:%Y-%m-%d_%H-%M}', 'tag': 'mlp'}, 'data': {'name': 'CES', 'dim_design': 6, 'dim_outcome': 1, 'design_scale': 100, 'outcome_scale': 1, 'noise_scale': 0.005, 'epsilon': '2 ** (-22)'}, 'model': {'name': 'MLP', 'embed_dim': 32, 'encoding_dim': 32, 'hidden_dim': 128, 'encoder_hidden_depth': 1, 'emitter_hidden_depth': 1, 'encoder_normalization': True}}
+wandb: Currently logged in as: zhanghu-zhao (zhanghu_zhao) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: creating run
+wandb: Tracking run with wandb version 0.21.1
+wandb: Run data is saved locally in /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/17-10-47/wandb/run-20260427_171059-drxq95x8
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run CES-6D-2026-04-27_17-10
+wandb: ⭐️ View project at https://wandb.ai/zhanghu_zhao/DAD
+wandb: 🚀 View run at https://wandb.ai/zhanghu_zhao/DAD/runs/drxq95x8
+wandb: WARNING Saving files without folders. If you want to preserve subdirectories pass base_path to wandb.save, i.e. wandb.save("/mnt/folder/file.h5", base_path="/mnt")
+[2026-04-27 17:11:04](ces.py 163): INFO SetEquivariantDesignNetwork(
+  (encoder): EncoderNetworkV2(
+    (embed_design): Sequential(
+      (0): Linear(in_features=6, out_features=32, bias=True)
+      (1): ReLU()
+      (2): LayerNorm((32,), eps=1e-05, elementwise_affine=True)
+    )
+    (embed_observation): Sequential(
+      (0): Linear(in_features=1, out_features=32, bias=True)
+      (1): ReLU()
+      (2): LayerNorm((32,), eps=1e-05, elementwise_affine=True)
+    )
+    (hidden_layers): Sequential(
+      (0): Linear(in_features=64, out_features=128, bias=True)
+      (1): ReLU()
+      (2): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+    )
+    (output_layer): Linear(in_features=128, out_features=32, bias=True)
+  )
+  (emitter): EmitterNetwork(
+    (hidden_layers): Sequential(
+      (0): Linear(in_features=32, out_features=128, bias=True)
+      (1): ReLU()
+    )
+    (output_layer): Linear(in_features=128, out_features=6, bias=True)
+    (output_norm): Identity()
+  )
+)
+[2026-04-27 17:11:04](ces.py 171): INFO CES(training=True, design_scale=100, outcome_scale=1, theta_prior=Normal(loc: 0.0, scale: 1.0), dim_design=6, dim_outcome=1, basket_dim=3, noise_scale=0.005, epsilon=2.384185791015625e-07, rho_a=1.0, rho_b=1.0, rho_prior=Beta(), alpha_concentration=tensor([1., 1., 1.], device='cuda:0'), alpha_prior=Dirichlet(concentration: torch.Size([3])), u_mu=1.0, u_sigma=3.0, log_u_prior=Normal(loc: 1.0, scale: 3.0))
+[2026-04-27 17:11:24](ces.py 107): INFO Epoch: 0, loss: 4.1900, sPCE bound: 5.896874209929622
+[2026-04-27 17:11:24](ces.py 112): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/17-10-47/ckpt.tar
+[2026-04-27 17:13:35](ces.py 107): INFO Epoch: 50, loss: 3.0296, sPCE bound: 5.894269039918101
+[2026-04-27 17:15:45](ces.py 107): INFO Epoch: 100, loss: 2.6027, sPCE bound: 5.894882073689616
+[2026-04-27 17:17:56](ces.py 107): INFO Epoch: 150, loss: 2.4522, sPCE bound: 5.872672041941798
+[2026-04-27 17:20:07](ces.py 107): INFO Epoch: 200, loss: 2.6042, sPCE bound: 5.811277708102382
+[2026-04-27 17:22:18](ces.py 107): INFO Epoch: 250, loss: 2.5236, sPCE bound: 5.811667820502437
+[2026-04-27 17:24:29](ces.py 107): INFO Epoch: 300, loss: 2.4646, sPCE bound: 5.821857443143046
+[2026-04-27 17:26:40](ces.py 107): INFO Epoch: 350, loss: 1.6247, sPCE bound: 5.941750219155467
+[2026-04-27 17:28:51](ces.py 107): INFO Epoch: 400, loss: 1.5550, sPCE bound: 5.959312221099055
+[2026-04-27 17:31:02](ces.py 107): INFO Epoch: 450, loss: 1.1673, sPCE bound: 6.0126413610469465
+[2026-04-27 17:33:13](ces.py 107): INFO Epoch: 500, loss: 1.5153, sPCE bound: 6.022232731867946
+[2026-04-27 17:33:13](ces.py 112): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/17-10-47/ckpt.tar
+[2026-04-27 17:35:23](ces.py 107): INFO Epoch: 550, loss: 1.2155, sPCE bound: 6.049905365396655
+[2026-04-27 17:37:34](ces.py 107): INFO Epoch: 600, loss: 1.5025, sPCE bound: 5.990691667486346
+[2026-04-27 17:39:45](ces.py 107): INFO Epoch: 650, loss: 1.2740, sPCE bound: 5.988263716984904
+[2026-04-27 17:41:56](ces.py 107): INFO Epoch: 700, loss: 1.3410, sPCE bound: 6.022088756848491
+[2026-04-27 17:44:07](ces.py 107): INFO Epoch: 750, loss: 1.5028, sPCE bound: 5.9552005138885145
+[2026-04-27 17:46:17](ces.py 107): INFO Epoch: 800, loss: 1.7178, sPCE bound: 5.9452720788013105
+[2026-04-27 17:48:28](ces.py 107): INFO Epoch: 850, loss: 1.2840, sPCE bound: 5.978639846731341
+[2026-04-27 17:50:39](ces.py 107): INFO Epoch: 900, loss: 1.6518, sPCE bound: 5.9455650356303815
+[2026-04-27 17:52:50](ces.py 107): INFO Epoch: 950, loss: 1.6315, sPCE bound: 5.93343674211613
+[2026-04-27 17:55:00](ces.py 107): INFO Epoch: 1000, loss: 1.4699, sPCE bound: 5.947475394297755
+[2026-04-27 17:55:00](ces.py 112): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/17-10-47/ckpt.tar
+[2026-04-27 17:57:11](ces.py 107): INFO Epoch: 1050, loss: 1.2297, sPCE bound: 5.942345043708003
+[2026-04-27 17:59:21](ces.py 107): INFO Epoch: 1100, loss: 1.5315, sPCE bound: 5.964742263842738
+[2026-04-27 18:01:32](ces.py 107): INFO Epoch: 1150, loss: 1.4460, sPCE bound: 5.938874801684535
+[2026-04-27 18:03:43](ces.py 107): INFO Epoch: 1200, loss: 1.3790, sPCE bound: 5.963904460955775
+[2026-04-27 18:05:53](ces.py 107): INFO Epoch: 1250, loss: 1.6853, sPCE bound: 5.94127907424084
+[2026-04-27 18:08:04](ces.py 107): INFO Epoch: 1300, loss: 1.6871, sPCE bound: 5.924274822760737
+[2026-04-27 18:10:15](ces.py 107): INFO Epoch: 1350, loss: 1.5820, sPCE bound: 5.949292501498378
+[2026-04-27 18:12:26](ces.py 107): INFO Epoch: 1400, loss: 1.3891, sPCE bound: 5.893320700217402
+[2026-04-27 18:14:36](ces.py 107): INFO Epoch: 1450, loss: 1.6636, sPCE bound: 5.9236172047149305
+[2026-04-27 18:16:47](ces.py 107): INFO Epoch: 1500, loss: 1.5428, sPCE bound: 5.897247215796626
+[2026-04-27 18:16:47](ces.py 112): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/17-10-47/ckpt.tar
+[2026-04-27 18:18:58](ces.py 107): INFO Epoch: 1550, loss: 1.5146, sPCE bound: 5.887609859992183
+[2026-04-27 18:21:09](ces.py 107): INFO Epoch: 1600, loss: 1.5450, sPCE bound: 5.926731815625346
+[2026-04-27 18:23:19](ces.py 107): INFO Epoch: 1650, loss: 1.5688, sPCE bound: 5.888738265324748
+[2026-04-27 18:25:30](ces.py 107): INFO Epoch: 1700, loss: 1.7155, sPCE bound: 5.856479367304957
+[2026-04-27 18:27:40](ces.py 107): INFO Epoch: 1750, loss: 1.4503, sPCE bound: 5.837678840447581
+[2026-04-27 18:29:51](ces.py 107): INFO Epoch: 1800, loss: 1.5663, sPCE bound: 5.855582198191798
+[2026-04-27 18:32:02](ces.py 107): INFO Epoch: 1850, loss: 1.9789, sPCE bound: 5.790301790524638
+[2026-04-27 18:34:13](ces.py 107): INFO Epoch: 1900, loss: 1.5832, sPCE bound: 5.789168348599589
+[2026-04-27 18:36:23](ces.py 107): INFO Epoch: 1950, loss: 1.5632, sPCE bound: 5.809757372428096
+[2026-04-27 18:38:31](ces.py 114): INFO Training time: 1.451 hours in total, 0.001 hours per epoch
+[2026-04-27 18:38:31](ces.py 179): INFO Model has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/17-10-47/model/ces.pth
+[2026-04-27 18:43:02](ces.py 183): INFO AttrDict({'pce_mean': tensor([ 4.0489,  7.0743,  8.8591, 10.3805, 10.7546, 10.9805, 11.1622, 11.4162,
+        11.7451, 12.1098]), 'pce_se': tensor([0.0301, 0.0509, 0.0650, 0.0808, 0.0857, 0.0887, 0.0912, 0.0944, 0.0977,
+        0.0991]), 'nmc_mean': tensor([ 4.0489,  7.0751,  8.8680, 10.4459, 10.8698, 11.1405, 11.3870, 11.7523,
+        12.3326, 13.0378]), 'nmc_se': tensor([0.0301, 0.0509, 0.0654, 0.0830, 0.0894, 0.0935, 0.0980, 0.1056, 0.1183,
+        0.1370])})
+[2026-04-27 18:43:02](ces.py 184): INFO PCE: 12.110+-0.099	NMC: 13.038+-0.137
+[1;34mwandb[0m: 
+[1;34mwandb[0m: 🚀 View run [33mCES-6D-2026-04-27_17-10[0m at: [34mhttps://wandb.ai/zhanghu_zhao/DAD/runs/drxq95x8[0m
+[1;34mwandb[0m: Find logs at: [1;35moutputs/hydra/2026-04-27/17-10-47/wandb/run-20260427_171059-drxq95x8/logs[0m

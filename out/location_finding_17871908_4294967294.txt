@@ -1,0 +1,842 @@
+-------------------------------------------------------------------------------
+There are messages associated with the following module(s):
+-------------------------------------------------------------------------------
+
+PyTorch/2.7.1-rocm-6.2.4-python-3.12-singularity-20250827:
+   Though this container is based on a version of ROCm that is officially
+   supported by the ROCm driver on the system, we cannot exclude that there
+   will be problems when, e.g., the container integrates with the Cray PE as
+   it may be trying to link to libraries that were meant to be used with a
+   different version of ROCm. In particular, we expect that mpi4py may
+   produce warnings.
+
+-------------------------------------------------------------------------------[2026-04-27 16:23:19](location_finding.py 119): INFO Running with config:
+{'max_epoch': 100000, 'batch_size': 2000, 'eval_size': 100, 'L': 2000, 'M': 2000, 'T': 20, 'lr': 5e-05, 'loss': 'PCELoss', 'seed': 123, 'fix_seed': True, 'clip_grads': True, 'verbose': 50, 'device': 'cuda', 'output_dir': '/pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10', 'checkpoint': 500, 'checkpoint_name': 'ckpt.tar', 'file_name': 'loc.pth', 'eval_batch_size': 100, 'eval_L': 1000000, 'eval_M': 2000, 'eval_T': 20, 'wandb': {'group': '${data.name}', 'project': 'DAD', 'use_wandb': True, 'run_name': '${data.name}-${data.dim_design}D${data.K}K-${now:%Y-%m-%d_%H-%M}', 'tag': 'mlp'}, 'data': {'name': 'Location', 'K': 2, 'dim_design': 2, 'dim_outcome': 1, 'design_scale': 1, 'theta_dist': 'uniform', 'noise_scale': 0.5, 'base_signal': 0.1, 'max_signal': 0.0001}, 'model': {'name': 'MLP', 'encoding_dim': 16, 'hidden_dim': 128, 'encoder_hidden_depth': 1, 'emitter_hidden_depth': 0}}
+wandb: Currently logged in as: zhanghu-zhao (zhanghu_zhao) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: creating run
+wandb: Tracking run with wandb version 0.21.1
+wandb: Run data is saved locally in /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/wandb/run-20260427_162319-nnal83gb
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Location-2D2K-2026-04-27_16-23
+wandb: ⭐️ View project at https://wandb.ai/zhanghu_zhao/DAD
+wandb: 🚀 View run at https://wandb.ai/zhanghu_zhao/DAD/runs/nnal83gb
+wandb: WARNING Saving files without folders. If you want to preserve subdirectories pass base_path to wandb.save, i.e. wandb.save("/mnt/folder/file.h5", base_path="/mnt")
+[2026-04-27 16:23:24](location_finding.py 153): INFO SetEquivariantDesignNetwork(
+  (encoder): EncoderNetwork(
+    (hidden_layers): Sequential(
+      (0): Linear(in_features=3, out_features=128, bias=True)
+      (1): ReLU()
+    )
+    (output_layer): Linear(in_features=128, out_features=16, bias=True)
+  )
+  (emitter): EmitterNetwork(
+    (hidden_layers): Identity()
+    (output_layer): Linear(in_features=16, out_features=2, bias=True)
+    (output_norm): Identity()
+  )
+)
+[2026-04-27 16:23:24](location_finding.py 161): INFO HiddenLocation(training=True, design_scale=1, outcome_scale=None, theta_prior=Uniform(low: torch.Size([2, 2]), high: torch.Size([2, 2])), theta_dist=uniform, theta_p1=tensor([[0., 0.],
+        [0., 0.]], device='cuda:0'), theta_p2=tensor([[1., 1.],
+        [1., 1.]], device='cuda:0'), base_signal=0.1, max_signal=0.0001, dim=2, K=2, conditional=Normal(loc: 0.0, scale: 0.5))
+[2026-04-27 16:23:40](location_finding.py 97): INFO Epoch: 0, loss: 5.7771, sPCE bound: 1.879508070362542
+[2026-04-27 16:23:40](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:23:44](location_finding.py 97): INFO Epoch: 50, loss: 2.8488, sPCE bound: 4.764473490131829
+[2026-04-27 16:23:47](location_finding.py 97): INFO Epoch: 100, loss: 2.5354, sPCE bound: 5.0569267791638115
+[2026-04-27 16:23:51](location_finding.py 97): INFO Epoch: 150, loss: 2.4026, sPCE bound: 5.246026329411004
+[2026-04-27 16:23:55](location_finding.py 97): INFO Epoch: 200, loss: 2.3037, sPCE bound: 5.351194433582757
+[2026-04-27 16:23:59](location_finding.py 97): INFO Epoch: 250, loss: 2.2623, sPCE bound: 5.356099657429192
+[2026-04-27 16:24:02](location_finding.py 97): INFO Epoch: 300, loss: 2.0922, sPCE bound: 5.49377160490844
+[2026-04-27 16:24:06](location_finding.py 97): INFO Epoch: 350, loss: 1.9885, sPCE bound: 5.597473673237298
+[2026-04-27 16:24:10](location_finding.py 97): INFO Epoch: 400, loss: 1.8952, sPCE bound: 5.650274328602288
+[2026-04-27 16:24:14](location_finding.py 97): INFO Epoch: 450, loss: 1.9117, sPCE bound: 5.696258477581475
+[2026-04-27 16:24:17](location_finding.py 97): INFO Epoch: 500, loss: 1.6984, sPCE bound: 5.8874087852368095
+[2026-04-27 16:24:17](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:24:21](location_finding.py 97): INFO Epoch: 550, loss: 1.7003, sPCE bound: 5.966932587040398
+[2026-04-27 16:24:25](location_finding.py 97): INFO Epoch: 600, loss: 1.5857, sPCE bound: 6.049009136570428
+[2026-04-27 16:24:28](location_finding.py 97): INFO Epoch: 650, loss: 1.3768, sPCE bound: 6.2252301496395805
+[2026-04-27 16:24:32](location_finding.py 97): INFO Epoch: 700, loss: 1.3234, sPCE bound: 6.296781710995171
+[2026-04-27 16:24:36](location_finding.py 97): INFO Epoch: 750, loss: 1.2953, sPCE bound: 6.323464445484612
+[2026-04-27 16:24:40](location_finding.py 97): INFO Epoch: 800, loss: 1.2057, sPCE bound: 6.457484177959893
+[2026-04-27 16:24:43](location_finding.py 97): INFO Epoch: 850, loss: 1.1414, sPCE bound: 6.5135530752072075
+[2026-04-27 16:24:47](location_finding.py 97): INFO Epoch: 900, loss: 1.0297, sPCE bound: 6.503217749012444
+[2026-04-27 16:24:51](location_finding.py 97): INFO Epoch: 950, loss: 1.0441, sPCE bound: 6.542310408962701
+[2026-04-27 16:24:55](location_finding.py 97): INFO Epoch: 1000, loss: 1.0816, sPCE bound: 6.539958648098443
+[2026-04-27 16:24:55](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:24:58](location_finding.py 97): INFO Epoch: 1050, loss: 1.0216, sPCE bound: 6.571581177128289
+[2026-04-27 16:25:02](location_finding.py 97): INFO Epoch: 1100, loss: 0.9473, sPCE bound: 6.5998015922436455
+[2026-04-27 16:25:06](location_finding.py 97): INFO Epoch: 1150, loss: 0.9702, sPCE bound: 6.6391751092800835
+[2026-04-27 16:25:09](location_finding.py 97): INFO Epoch: 1200, loss: 0.9576, sPCE bound: 6.652941815269921
+[2026-04-27 16:25:13](location_finding.py 97): INFO Epoch: 1250, loss: 0.9821, sPCE bound: 6.647017471207116
+[2026-04-27 16:25:17](location_finding.py 97): INFO Epoch: 1300, loss: 0.8993, sPCE bound: 6.689489952934716
+[2026-04-27 16:25:20](location_finding.py 97): INFO Epoch: 1350, loss: 0.8958, sPCE bound: 6.69146072090957
+[2026-04-27 16:25:24](location_finding.py 97): INFO Epoch: 1400, loss: 0.9505, sPCE bound: 6.669420890224908
+[2026-04-27 16:25:28](location_finding.py 97): INFO Epoch: 1450, loss: 0.9048, sPCE bound: 6.736353866470788
+[2026-04-27 16:25:32](location_finding.py 97): INFO Epoch: 1500, loss: 0.9759, sPCE bound: 6.707800857437585
+[2026-04-27 16:25:32](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:25:35](location_finding.py 97): INFO Epoch: 1550, loss: 0.8216, sPCE bound: 6.806945375812981
+[2026-04-27 16:25:39](location_finding.py 97): INFO Epoch: 1600, loss: 0.8486, sPCE bound: 6.730407468689416
+[2026-04-27 16:25:43](location_finding.py 97): INFO Epoch: 1650, loss: 0.8363, sPCE bound: 6.774180166138146
+[2026-04-27 16:25:47](location_finding.py 97): INFO Epoch: 1700, loss: 0.8486, sPCE bound: 6.77343880356643
+[2026-04-27 16:25:50](location_finding.py 97): INFO Epoch: 1750, loss: 0.8071, sPCE bound: 6.758428983105157
+[2026-04-27 16:25:54](location_finding.py 97): INFO Epoch: 1800, loss: 0.8410, sPCE bound: 6.811806492222283
+[2026-04-27 16:25:58](location_finding.py 97): INFO Epoch: 1850, loss: 0.7611, sPCE bound: 6.826009742630456
+[2026-04-27 16:26:01](location_finding.py 97): INFO Epoch: 1900, loss: 0.7192, sPCE bound: 6.9239492339024284
+[2026-04-27 16:26:05](location_finding.py 97): INFO Epoch: 1950, loss: 0.7072, sPCE bound: 6.929681889427636
+[2026-04-27 16:26:09](location_finding.py 97): INFO Epoch: 2000, loss: 0.6743, sPCE bound: 6.906944744003747
+[2026-04-27 16:26:09](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:26:13](location_finding.py 97): INFO Epoch: 2050, loss: 0.6260, sPCE bound: 6.890523604763482
+[2026-04-27 16:26:16](location_finding.py 97): INFO Epoch: 2100, loss: 0.6460, sPCE bound: 6.943325452221368
+[2026-04-27 16:26:20](location_finding.py 97): INFO Epoch: 2150, loss: 0.6252, sPCE bound: 6.9868594926724175
+[2026-04-27 16:26:24](location_finding.py 97): INFO Epoch: 2200, loss: 0.6294, sPCE bound: 7.001906566036675
+[2026-04-27 16:26:28](location_finding.py 97): INFO Epoch: 2250, loss: 0.6080, sPCE bound: 7.027616135490868
+[2026-04-27 16:26:31](location_finding.py 97): INFO Epoch: 2300, loss: 0.5848, sPCE bound: 7.00522910775039
+[2026-04-27 16:26:35](location_finding.py 97): INFO Epoch: 2350, loss: 0.5640, sPCE bound: 7.032819561375115
+[2026-04-27 16:26:39](location_finding.py 97): INFO Epoch: 2400, loss: 0.5254, sPCE bound: 7.022188596142266
+[2026-04-27 16:26:43](location_finding.py 97): INFO Epoch: 2450, loss: 0.5734, sPCE bound: 7.014856926811669
+[2026-04-27 16:26:46](location_finding.py 97): INFO Epoch: 2500, loss: 0.5632, sPCE bound: 7.036058000935052
+[2026-04-27 16:26:46](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:26:50](location_finding.py 97): INFO Epoch: 2550, loss: 0.5675, sPCE bound: 7.074851147545312
+[2026-04-27 16:26:54](location_finding.py 97): INFO Epoch: 2600, loss: 0.5673, sPCE bound: 7.023862473381493
+[2026-04-27 16:26:57](location_finding.py 97): INFO Epoch: 2650, loss: 0.5233, sPCE bound: 7.080566934956048
+[2026-04-27 16:27:01](location_finding.py 97): INFO Epoch: 2700, loss: 0.4928, sPCE bound: 7.065722159756158
+[2026-04-27 16:27:05](location_finding.py 97): INFO Epoch: 2750, loss: 0.5370, sPCE bound: 7.093048505199883
+[2026-04-27 16:27:09](location_finding.py 97): INFO Epoch: 2800, loss: 0.5582, sPCE bound: 7.0944198888668755
+[2026-04-27 16:27:12](location_finding.py 97): INFO Epoch: 2850, loss: 0.5648, sPCE bound: 7.04115497292373
+[2026-04-27 16:27:16](location_finding.py 97): INFO Epoch: 2900, loss: 0.5019, sPCE bound: 7.0717418712506035
+[2026-04-27 16:27:20](location_finding.py 97): INFO Epoch: 2950, loss: 0.5172, sPCE bound: 7.063845567120049
+[2026-04-27 16:27:24](location_finding.py 97): INFO Epoch: 3000, loss: 0.5376, sPCE bound: 7.089226536167596
+[2026-04-27 16:27:24](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:27:27](location_finding.py 97): INFO Epoch: 3050, loss: 0.5338, sPCE bound: 7.0589061898121575
+[2026-04-27 16:27:31](location_finding.py 97): INFO Epoch: 3100, loss: 0.5022, sPCE bound: 7.099230639351342
+[2026-04-27 16:27:35](location_finding.py 97): INFO Epoch: 3150, loss: 0.4783, sPCE bound: 7.146204523457024
+[2026-04-27 16:27:39](location_finding.py 97): INFO Epoch: 3200, loss: 0.5125, sPCE bound: 7.10909222782943
+[2026-04-27 16:27:42](location_finding.py 97): INFO Epoch: 3250, loss: 0.5130, sPCE bound: 7.06459634722564
+[2026-04-27 16:27:46](location_finding.py 97): INFO Epoch: 3300, loss: 0.5133, sPCE bound: 7.099860422028039
+[2026-04-27 16:27:50](location_finding.py 97): INFO Epoch: 3350, loss: 0.5075, sPCE bound: 7.1104473096260765
+[2026-04-27 16:27:54](location_finding.py 97): INFO Epoch: 3400, loss: 0.5303, sPCE bound: 7.0569006723294
+[2026-04-27 16:27:57](location_finding.py 97): INFO Epoch: 3450, loss: 0.4986, sPCE bound: 7.12318160356376
+[2026-04-27 16:28:01](location_finding.py 97): INFO Epoch: 3500, loss: 0.4998, sPCE bound: 7.108351580513451
+[2026-04-27 16:28:01](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:28:05](location_finding.py 97): INFO Epoch: 3550, loss: 0.5235, sPCE bound: 7.09857033909652
+[2026-04-27 16:28:09](location_finding.py 97): INFO Epoch: 3600, loss: 0.5039, sPCE bound: 7.074575178040002
+[2026-04-27 16:28:12](location_finding.py 97): INFO Epoch: 3650, loss: 0.5489, sPCE bound: 7.114075205934975
+[2026-04-27 16:28:16](location_finding.py 97): INFO Epoch: 3700, loss: 0.4978, sPCE bound: 7.109126560104821
+[2026-04-27 16:28:20](location_finding.py 97): INFO Epoch: 3750, loss: 0.4991, sPCE bound: 7.130085371149514
+[2026-04-27 16:28:23](location_finding.py 97): INFO Epoch: 3800, loss: 0.4989, sPCE bound: 7.117782883060906
+[2026-04-27 16:28:27](location_finding.py 97): INFO Epoch: 3850, loss: 0.4770, sPCE bound: 7.08919488610122
+[2026-04-27 16:28:31](location_finding.py 97): INFO Epoch: 3900, loss: 0.4998, sPCE bound: 7.131013057840798
+[2026-04-27 16:28:35](location_finding.py 97): INFO Epoch: 3950, loss: 0.4730, sPCE bound: 7.1126953882107475
+[2026-04-27 16:28:38](location_finding.py 97): INFO Epoch: 4000, loss: 0.4606, sPCE bound: 7.154243372095559
+[2026-04-27 16:28:38](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:28:42](location_finding.py 97): INFO Epoch: 4050, loss: 0.5120, sPCE bound: 7.066112927807305
+[2026-04-27 16:28:46](location_finding.py 97): INFO Epoch: 4100, loss: 0.4774, sPCE bound: 7.088139824284051
+[2026-04-27 16:28:50](location_finding.py 97): INFO Epoch: 4150, loss: 0.4523, sPCE bound: 7.105699948681329
+[2026-04-27 16:28:53](location_finding.py 97): INFO Epoch: 4200, loss: 0.4612, sPCE bound: 7.1315621656307915
+[2026-04-27 16:28:57](location_finding.py 97): INFO Epoch: 4250, loss: 0.4727, sPCE bound: 7.125708840502236
+[2026-04-27 16:29:01](location_finding.py 97): INFO Epoch: 4300, loss: 0.4815, sPCE bound: 7.106165073526833
+[2026-04-27 16:29:05](location_finding.py 97): INFO Epoch: 4350, loss: 0.4715, sPCE bound: 7.122067592752908
+[2026-04-27 16:29:08](location_finding.py 97): INFO Epoch: 4400, loss: 0.4764, sPCE bound: 7.117339037073586
+[2026-04-27 16:29:12](location_finding.py 97): INFO Epoch: 4450, loss: 0.4491, sPCE bound: 7.105262331379388
+[2026-04-27 16:29:16](location_finding.py 97): INFO Epoch: 4500, loss: 0.4652, sPCE bound: 7.144153915060494
+[2026-04-27 16:29:16](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:29:20](location_finding.py 97): INFO Epoch: 4550, loss: 0.4839, sPCE bound: 7.112727783335183
+[2026-04-27 16:29:23](location_finding.py 97): INFO Epoch: 4600, loss: 0.4683, sPCE bound: 7.182962618483041
+[2026-04-27 16:29:27](location_finding.py 97): INFO Epoch: 4650, loss: 0.4683, sPCE bound: 7.119838706863854
+[2026-04-27 16:29:31](location_finding.py 97): INFO Epoch: 4700, loss: 0.4522, sPCE bound: 7.129212937963937
+[2026-04-27 16:29:34](location_finding.py 97): INFO Epoch: 4750, loss: 0.4592, sPCE bound: 7.137932322634194
+[2026-04-27 16:29:38](location_finding.py 97): INFO Epoch: 4800, loss: 0.4503, sPCE bound: 7.120990626228783
+[2026-04-27 16:29:42](location_finding.py 97): INFO Epoch: 4850, loss: 0.4540, sPCE bound: 7.143816433561776
+[2026-04-27 16:29:46](location_finding.py 97): INFO Epoch: 4900, loss: 0.4761, sPCE bound: 7.143704376829598
+[2026-04-27 16:29:49](location_finding.py 97): INFO Epoch: 4950, loss: 0.5411, sPCE bound: 7.1074470502266625
+[2026-04-27 16:29:53](location_finding.py 97): INFO Epoch: 5000, loss: 0.4776, sPCE bound: 7.139440767181847
+[2026-04-27 16:29:53](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:29:57](location_finding.py 97): INFO Epoch: 5050, loss: 0.4595, sPCE bound: 7.108485005510781
+[2026-04-27 16:30:01](location_finding.py 97): INFO Epoch: 5100, loss: 0.4324, sPCE bound: 7.11992277921531
+[2026-04-27 16:30:04](location_finding.py 97): INFO Epoch: 5150, loss: 0.4675, sPCE bound: 7.131294063938592
+[2026-04-27 16:30:08](location_finding.py 97): INFO Epoch: 5200, loss: 0.4635, sPCE bound: 7.16659482539985
+[2026-04-27 16:30:12](location_finding.py 97): INFO Epoch: 5250, loss: 0.4931, sPCE bound: 7.113208941830132
+[2026-04-27 16:30:16](location_finding.py 97): INFO Epoch: 5300, loss: 0.4609, sPCE bound: 7.1732826155552605
+[2026-04-27 16:30:19](location_finding.py 97): INFO Epoch: 5350, loss: 0.4580, sPCE bound: 7.147056691063378
+[2026-04-27 16:30:23](location_finding.py 97): INFO Epoch: 5400, loss: 0.5390, sPCE bound: 7.06926035107467
+[2026-04-27 16:30:27](location_finding.py 97): INFO Epoch: 5450, loss: 0.4641, sPCE bound: 7.112734190834496
+[2026-04-27 16:30:31](location_finding.py 97): INFO Epoch: 5500, loss: 0.4708, sPCE bound: 7.14026995719764
+[2026-04-27 16:30:31](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:30:34](location_finding.py 97): INFO Epoch: 5550, loss: 0.4694, sPCE bound: 7.136839531076882
+[2026-04-27 16:30:38](location_finding.py 97): INFO Epoch: 5600, loss: 0.4697, sPCE bound: 7.122550002945397
+[2026-04-27 16:30:42](location_finding.py 97): INFO Epoch: 5650, loss: 0.4496, sPCE bound: 7.156721435202096
+[2026-04-27 16:30:46](location_finding.py 97): INFO Epoch: 5700, loss: 0.4666, sPCE bound: 7.15069248498771
+[2026-04-27 16:30:49](location_finding.py 97): INFO Epoch: 5750, loss: 0.4558, sPCE bound: 7.1531729918846825
+[2026-04-27 16:30:53](location_finding.py 97): INFO Epoch: 5800, loss: 0.4328, sPCE bound: 7.129916898621056
+[2026-04-27 16:30:57](location_finding.py 97): INFO Epoch: 5850, loss: 0.4958, sPCE bound: 7.120472185028527
+[2026-04-27 16:31:01](location_finding.py 97): INFO Epoch: 5900, loss: 0.5029, sPCE bound: 7.070678941620324
+[2026-04-27 16:31:04](location_finding.py 97): INFO Epoch: 5950, loss: 0.4213, sPCE bound: 7.1478576284775475
+[2026-04-27 16:31:08](location_finding.py 97): INFO Epoch: 6000, loss: 0.4647, sPCE bound: 7.127840272797082
+[2026-04-27 16:31:08](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:31:12](location_finding.py 97): INFO Epoch: 6050, loss: 0.4417, sPCE bound: 7.122677497280572
+[2026-04-27 16:31:16](location_finding.py 97): INFO Epoch: 6100, loss: 0.4533, sPCE bound: 7.137983642233346
+[2026-04-27 16:31:19](location_finding.py 97): INFO Epoch: 6150, loss: 0.4357, sPCE bound: 7.19033276261184
+[2026-04-27 16:31:23](location_finding.py 97): INFO Epoch: 6200, loss: 0.4112, sPCE bound: 7.204092286241982
+[2026-04-27 16:31:27](location_finding.py 97): INFO Epoch: 6250, loss: 0.4700, sPCE bound: 7.1429892701039055
+[2026-04-27 16:31:31](location_finding.py 97): INFO Epoch: 6300, loss: 0.4640, sPCE bound: 7.128155938995812
+[2026-04-27 16:31:34](location_finding.py 97): INFO Epoch: 6350, loss: 0.4711, sPCE bound: 7.168579630268548
+[2026-04-27 16:31:38](location_finding.py 97): INFO Epoch: 6400, loss: 0.4421, sPCE bound: 7.185795657051537
+[2026-04-27 16:31:42](location_finding.py 97): INFO Epoch: 6450, loss: 0.4191, sPCE bound: 7.150938860786889
+[2026-04-27 16:31:46](location_finding.py 97): INFO Epoch: 6500, loss: 0.4576, sPCE bound: 7.136608771694634
+[2026-04-27 16:31:46](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:31:49](location_finding.py 97): INFO Epoch: 6550, loss: 0.4668, sPCE bound: 7.1488236111531
+[2026-04-27 16:31:53](location_finding.py 97): INFO Epoch: 6600, loss: 0.4575, sPCE bound: 7.186287067545388
+[2026-04-27 16:31:57](location_finding.py 97): INFO Epoch: 6650, loss: 0.4561, sPCE bound: 7.164128951443169
+[2026-04-27 16:32:01](location_finding.py 97): INFO Epoch: 6700, loss: 0.4219, sPCE bound: 7.153341851843331
+[2026-04-27 16:32:04](location_finding.py 97): INFO Epoch: 6750, loss: 0.4565, sPCE bound: 7.159109584701989
+[2026-04-27 16:32:08](location_finding.py 97): INFO Epoch: 6800, loss: 0.4447, sPCE bound: 7.157011858833764
+[2026-04-27 16:32:12](location_finding.py 97): INFO Epoch: 6850, loss: 0.4310, sPCE bound: 7.149004898680184
+[2026-04-27 16:32:16](location_finding.py 97): INFO Epoch: 6900, loss: 0.4295, sPCE bound: 7.162849329126809
+[2026-04-27 16:32:19](location_finding.py 97): INFO Epoch: 6950, loss: 0.4307, sPCE bound: 7.139635406149361
+[2026-04-27 16:32:23](location_finding.py 97): INFO Epoch: 7000, loss: 0.4477, sPCE bound: 7.1666957360634544
+[2026-04-27 16:32:23](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:32:27](location_finding.py 97): INFO Epoch: 7050, loss: 0.4553, sPCE bound: 7.179216049326394
+[2026-04-27 16:32:31](location_finding.py 97): INFO Epoch: 7100, loss: 0.4441, sPCE bound: 7.186534695042107
+[2026-04-27 16:32:34](location_finding.py 97): INFO Epoch: 7150, loss: 0.4523, sPCE bound: 7.136854938877557
+[2026-04-27 16:32:38](location_finding.py 97): INFO Epoch: 7200, loss: 0.4822, sPCE bound: 7.16421695770118
+[2026-04-27 16:32:42](location_finding.py 97): INFO Epoch: 7250, loss: 0.4558, sPCE bound: 7.117995433224175
+[2026-04-27 16:32:46](location_finding.py 97): INFO Epoch: 7300, loss: 0.4337, sPCE bound: 7.160358123196099
+[2026-04-27 16:32:49](location_finding.py 97): INFO Epoch: 7350, loss: 0.4129, sPCE bound: 7.1886585575470665
+[2026-04-27 16:32:53](location_finding.py 97): INFO Epoch: 7400, loss: 0.3960, sPCE bound: 7.130546740902398
+[2026-04-27 16:32:57](location_finding.py 97): INFO Epoch: 7450, loss: 0.4229, sPCE bound: 7.166158638609383
+[2026-04-27 16:33:01](location_finding.py 97): INFO Epoch: 7500, loss: 0.5287, sPCE bound: 7.086438588512872
+[2026-04-27 16:33:01](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:33:04](location_finding.py 97): INFO Epoch: 7550, loss: 0.4181, sPCE bound: 7.191381655348275
+[2026-04-27 16:33:08](location_finding.py 97): INFO Epoch: 7600, loss: 0.4146, sPCE bound: 7.175454310787652
+[2026-04-27 16:33:12](location_finding.py 97): INFO Epoch: 7650, loss: 0.4123, sPCE bound: 7.176322750462029
+[2026-04-27 16:33:16](location_finding.py 97): INFO Epoch: 7700, loss: 0.4322, sPCE bound: 7.140573046816323
+[2026-04-27 16:33:19](location_finding.py 97): INFO Epoch: 7750, loss: 0.4352, sPCE bound: 7.160657576931451
+[2026-04-27 16:33:23](location_finding.py 97): INFO Epoch: 7800, loss: 0.4513, sPCE bound: 7.176044396770928
+[2026-04-27 16:33:27](location_finding.py 97): INFO Epoch: 7850, loss: 0.4774, sPCE bound: 7.172507695568536
+[2026-04-27 16:33:30](location_finding.py 97): INFO Epoch: 7900, loss: 0.4177, sPCE bound: 7.179115555895303
+[2026-04-27 16:33:34](location_finding.py 97): INFO Epoch: 7950, loss: 0.4424, sPCE bound: 7.178584955347512
+[2026-04-27 16:33:38](location_finding.py 97): INFO Epoch: 8000, loss: 0.4356, sPCE bound: 7.209839574707482
+[2026-04-27 16:33:38](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:33:42](location_finding.py 97): INFO Epoch: 8050, loss: 0.4530, sPCE bound: 7.207822076691125
+[2026-04-27 16:33:45](location_finding.py 97): INFO Epoch: 8100, loss: 0.4095, sPCE bound: 7.177312217367623
+[2026-04-27 16:33:49](location_finding.py 97): INFO Epoch: 8150, loss: 0.4631, sPCE bound: 7.164082996262048
+[2026-04-27 16:33:53](location_finding.py 97): INFO Epoch: 8200, loss: 0.4779, sPCE bound: 7.09731655539367
+[2026-04-27 16:33:57](location_finding.py 97): INFO Epoch: 8250, loss: 0.4403, sPCE bound: 7.193900905264352
+[2026-04-27 16:34:01](location_finding.py 97): INFO Epoch: 8300, loss: 0.4291, sPCE bound: 7.194805077923272
+[2026-04-27 16:34:04](location_finding.py 97): INFO Epoch: 8350, loss: 0.4468, sPCE bound: 7.17747031868789
+[2026-04-27 16:34:08](location_finding.py 97): INFO Epoch: 8400, loss: 0.4456, sPCE bound: 7.153657071007226
+[2026-04-27 16:34:12](location_finding.py 97): INFO Epoch: 8450, loss: 0.4189, sPCE bound: 7.164439759863351
+[2026-04-27 16:34:16](location_finding.py 97): INFO Epoch: 8500, loss: 0.4711, sPCE bound: 7.118257872475121
+[2026-04-27 16:34:16](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:34:19](location_finding.py 97): INFO Epoch: 8550, loss: 0.5925, sPCE bound: 7.032168738258813
+[2026-04-27 16:34:23](location_finding.py 97): INFO Epoch: 8600, loss: 0.4150, sPCE bound: 7.163659266842339
+[2026-04-27 16:34:27](location_finding.py 97): INFO Epoch: 8650, loss: 0.5196, sPCE bound: 7.1428213042149284
+[2026-04-27 16:34:31](location_finding.py 97): INFO Epoch: 8700, loss: 0.4271, sPCE bound: 7.190363071573708
+[2026-04-27 16:34:34](location_finding.py 97): INFO Epoch: 8750, loss: 0.4038, sPCE bound: 7.1995988410839775
+[2026-04-27 16:34:38](location_finding.py 97): INFO Epoch: 8800, loss: 0.4361, sPCE bound: 7.171082935942147
+[2026-04-27 16:34:42](location_finding.py 97): INFO Epoch: 8850, loss: 0.4372, sPCE bound: 7.172403685463403
+[2026-04-27 16:34:46](location_finding.py 97): INFO Epoch: 8900, loss: 0.4325, sPCE bound: 7.189149193180535
+[2026-04-27 16:34:49](location_finding.py 97): INFO Epoch: 8950, loss: 0.4548, sPCE bound: 7.185681871784661
+[2026-04-27 16:34:53](location_finding.py 97): INFO Epoch: 9000, loss: 0.4097, sPCE bound: 7.157221726788018
+[2026-04-27 16:34:53](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:34:57](location_finding.py 97): INFO Epoch: 9050, loss: 0.4093, sPCE bound: 7.177651159180138
+[2026-04-27 16:35:01](location_finding.py 97): INFO Epoch: 9100, loss: 0.4392, sPCE bound: 7.137153409136269
+[2026-04-27 16:35:04](location_finding.py 97): INFO Epoch: 9150, loss: 0.4156, sPCE bound: 7.166612021339867
+[2026-04-27 16:35:08](location_finding.py 97): INFO Epoch: 9200, loss: 0.4056, sPCE bound: 7.1670023721585014
+[2026-04-27 16:35:12](location_finding.py 97): INFO Epoch: 9250, loss: 0.4277, sPCE bound: 7.1149635237583855
+[2026-04-27 16:35:16](location_finding.py 97): INFO Epoch: 9300, loss: 0.4047, sPCE bound: 7.209074370277856
+[2026-04-27 16:35:19](location_finding.py 97): INFO Epoch: 9350, loss: 0.4244, sPCE bound: 7.181075684441064
+[2026-04-27 16:35:23](location_finding.py 97): INFO Epoch: 9400, loss: 0.4393, sPCE bound: 7.1529884261021355
+[2026-04-27 16:35:27](location_finding.py 97): INFO Epoch: 9450, loss: 0.4532, sPCE bound: 7.145302496565316
+[2026-04-27 16:35:31](location_finding.py 97): INFO Epoch: 9500, loss: 0.4110, sPCE bound: 7.152577124250863
+[2026-04-27 16:35:31](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:35:34](location_finding.py 97): INFO Epoch: 9550, loss: 0.4031, sPCE bound: 7.179971895826791
+[2026-04-27 16:35:38](location_finding.py 97): INFO Epoch: 9600, loss: 0.4613, sPCE bound: 7.193292490852807
+[2026-04-27 16:35:42](location_finding.py 97): INFO Epoch: 9650, loss: 0.3810, sPCE bound: 7.205633036507104
+[2026-04-27 16:35:46](location_finding.py 97): INFO Epoch: 9700, loss: 0.4027, sPCE bound: 7.1976356428990105
+[2026-04-27 16:35:49](location_finding.py 97): INFO Epoch: 9750, loss: 0.4093, sPCE bound: 7.15414964379165
+[2026-04-27 16:35:53](location_finding.py 97): INFO Epoch: 9800, loss: 0.4006, sPCE bound: 7.192058376682732
+[2026-04-27 16:35:57](location_finding.py 97): INFO Epoch: 9850, loss: 0.4128, sPCE bound: 7.2111835700402
+[2026-04-27 16:36:01](location_finding.py 97): INFO Epoch: 9900, loss: 0.4149, sPCE bound: 7.198407135618661
+[2026-04-27 16:36:04](location_finding.py 97): INFO Epoch: 9950, loss: 0.3897, sPCE bound: 7.170075289619897
+[2026-04-27 16:36:08](location_finding.py 97): INFO Epoch: 10000, loss: 0.4914, sPCE bound: 7.097065917862389
+[2026-04-27 16:36:08](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:36:12](location_finding.py 97): INFO Epoch: 10050, loss: 0.4375, sPCE bound: 7.192008755815957
+[2026-04-27 16:36:16](location_finding.py 97): INFO Epoch: 10100, loss: 0.4279, sPCE bound: 7.183510146749947
+[2026-04-27 16:36:19](location_finding.py 97): INFO Epoch: 10150, loss: 0.4075, sPCE bound: 7.167308442009423
+[2026-04-27 16:36:23](location_finding.py 97): INFO Epoch: 10200, loss: 0.3962, sPCE bound: 7.174837968958352
+[2026-04-27 16:36:27](location_finding.py 97): INFO Epoch: 10250, loss: 0.4462, sPCE bound: 7.184517644060586
+[2026-04-27 16:36:31](location_finding.py 97): INFO Epoch: 10300, loss: 0.4177, sPCE bound: 7.201669357431863
+[2026-04-27 16:36:34](location_finding.py 97): INFO Epoch: 10350, loss: 0.4075, sPCE bound: 7.1417475265393
+[2026-04-27 16:36:38](location_finding.py 97): INFO Epoch: 10400, loss: 0.3908, sPCE bound: 7.1834870201477745
+[2026-04-27 16:36:42](location_finding.py 97): INFO Epoch: 10450, loss: 0.4029, sPCE bound: 7.209679417026971
+[2026-04-27 16:36:46](location_finding.py 97): INFO Epoch: 10500, loss: 0.4095, sPCE bound: 7.172843329323266
+[2026-04-27 16:36:46](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:36:49](location_finding.py 97): INFO Epoch: 10550, loss: 0.4068, sPCE bound: 7.171476296795342
+[2026-04-27 16:36:53](location_finding.py 97): INFO Epoch: 10600, loss: 0.4391, sPCE bound: 7.145904056442712
+[2026-04-27 16:36:57](location_finding.py 97): INFO Epoch: 10650, loss: 0.4297, sPCE bound: 7.178969762934182
+[2026-04-27 16:37:01](location_finding.py 97): INFO Epoch: 10700, loss: 0.4146, sPCE bound: 7.216009847534631
+[2026-04-27 16:37:04](location_finding.py 97): INFO Epoch: 10750, loss: 0.4350, sPCE bound: 7.170392624748681
+[2026-04-27 16:37:08](location_finding.py 97): INFO Epoch: 10800, loss: 0.4223, sPCE bound: 7.205140851152871
+[2026-04-27 16:37:12](location_finding.py 97): INFO Epoch: 10850, loss: 0.4385, sPCE bound: 7.187749914539788
+[2026-04-27 16:37:16](location_finding.py 97): INFO Epoch: 10900, loss: 0.4029, sPCE bound: 7.178055904520486
+[2026-04-27 16:37:19](location_finding.py 97): INFO Epoch: 10950, loss: 0.3920, sPCE bound: 7.186301611078713
+[2026-04-27 16:37:23](location_finding.py 97): INFO Epoch: 11000, loss: 0.4266, sPCE bound: 7.155403904331658
+[2026-04-27 16:37:23](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:37:27](location_finding.py 97): INFO Epoch: 11050, loss: 0.4503, sPCE bound: 7.147200725687478
+[2026-04-27 16:37:31](location_finding.py 97): INFO Epoch: 11100, loss: 0.4107, sPCE bound: 7.209676228178475
+[2026-04-27 16:37:34](location_finding.py 97): INFO Epoch: 11150, loss: 0.4027, sPCE bound: 7.202334992302392
+[2026-04-27 16:37:38](location_finding.py 97): INFO Epoch: 11200, loss: 0.3970, sPCE bound: 7.185203127277825
+[2026-04-27 16:37:42](location_finding.py 97): INFO Epoch: 11250, loss: 0.4088, sPCE bound: 7.225697092426751
+[2026-04-27 16:37:45](location_finding.py 97): INFO Epoch: 11300, loss: 0.4136, sPCE bound: 7.155885956896279
+[2026-04-27 16:37:49](location_finding.py 97): INFO Epoch: 11350, loss: 0.4400, sPCE bound: 7.189492813957665
+[2026-04-27 16:37:53](location_finding.py 97): INFO Epoch: 11400, loss: 0.4199, sPCE bound: 7.213110707415078
+[2026-04-27 16:37:57](location_finding.py 97): INFO Epoch: 11450, loss: 0.3614, sPCE bound: 7.2369980138668755
+[2026-04-27 16:38:01](location_finding.py 97): INFO Epoch: 11500, loss: 0.3908, sPCE bound: 7.240244053019021
+[2026-04-27 16:38:01](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:38:04](location_finding.py 97): INFO Epoch: 11550, loss: 0.4024, sPCE bound: 7.233752242935632
+[2026-04-27 16:38:08](location_finding.py 97): INFO Epoch: 11600, loss: 0.4015, sPCE bound: 7.198086939466927
+[2026-04-27 16:38:12](location_finding.py 97): INFO Epoch: 11650, loss: 0.3956, sPCE bound: 7.2172745090851524
+[2026-04-27 16:38:15](location_finding.py 97): INFO Epoch: 11700, loss: 0.3863, sPCE bound: 7.195799760235284
+[2026-04-27 16:38:19](location_finding.py 97): INFO Epoch: 11750, loss: 0.4411, sPCE bound: 7.183627478493188
+[2026-04-27 16:38:23](location_finding.py 97): INFO Epoch: 11800, loss: 0.4094, sPCE bound: 7.213950298441384
+[2026-04-27 16:38:27](location_finding.py 97): INFO Epoch: 11850, loss: 0.4339, sPCE bound: 7.148928098095391
+[2026-04-27 16:38:30](location_finding.py 97): INFO Epoch: 11900, loss: 0.3929, sPCE bound: 7.191159985674355
+[2026-04-27 16:38:34](location_finding.py 97): INFO Epoch: 11950, loss: 0.4033, sPCE bound: 7.206172160519097
+[2026-04-27 16:38:38](location_finding.py 97): INFO Epoch: 12000, loss: 0.4356, sPCE bound: 7.198065869224999
+[2026-04-27 16:38:38](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:38:42](location_finding.py 97): INFO Epoch: 12050, loss: 0.3837, sPCE bound: 7.1979741078743675
+[2026-04-27 16:38:45](location_finding.py 97): INFO Epoch: 12100, loss: 0.4134, sPCE bound: 7.199204586161111
+[2026-04-27 16:38:49](location_finding.py 97): INFO Epoch: 12150, loss: 0.3923, sPCE bound: 7.194883636845086
+[2026-04-27 16:38:53](location_finding.py 97): INFO Epoch: 12200, loss: 0.4359, sPCE bound: 7.208594850910638
+[2026-04-27 16:38:57](location_finding.py 97): INFO Epoch: 12250, loss: 0.4492, sPCE bound: 7.152596018923257
+[2026-04-27 16:39:00](location_finding.py 97): INFO Epoch: 12300, loss: 0.4023, sPCE bound: 7.214483283174966
+[2026-04-27 16:39:04](location_finding.py 97): INFO Epoch: 12350, loss: 0.4503, sPCE bound: 7.197575233591531
+[2026-04-27 16:39:08](location_finding.py 97): INFO Epoch: 12400, loss: 0.3834, sPCE bound: 7.20638101519439
+[2026-04-27 16:39:12](location_finding.py 97): INFO Epoch: 12450, loss: 0.4056, sPCE bound: 7.188233010185693
+[2026-04-27 16:39:15](location_finding.py 97): INFO Epoch: 12500, loss: 0.3759, sPCE bound: 7.217880569113229
+[2026-04-27 16:39:15](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:39:19](location_finding.py 97): INFO Epoch: 12550, loss: 0.3961, sPCE bound: 7.2378282171616295
+[2026-04-27 16:39:23](location_finding.py 97): INFO Epoch: 12600, loss: 0.3863, sPCE bound: 7.175748042477105
+[2026-04-27 16:39:27](location_finding.py 97): INFO Epoch: 12650, loss: 0.3914, sPCE bound: 7.2421956879029015
+[2026-04-27 16:39:30](location_finding.py 97): INFO Epoch: 12700, loss: 0.4051, sPCE bound: 7.206846944702599
+[2026-04-27 16:39:34](location_finding.py 97): INFO Epoch: 12750, loss: 0.4260, sPCE bound: 7.176608644140694
+[2026-04-27 16:39:38](location_finding.py 97): INFO Epoch: 12800, loss: 0.4507, sPCE bound: 7.165974013222192
+[2026-04-27 16:39:42](location_finding.py 97): INFO Epoch: 12850, loss: 0.3849, sPCE bound: 7.187454543722604
+[2026-04-27 16:39:45](location_finding.py 97): INFO Epoch: 12900, loss: 0.4125, sPCE bound: 7.175865135801766
+[2026-04-27 16:39:49](location_finding.py 97): INFO Epoch: 12950, loss: 0.4027, sPCE bound: 7.2274652344116905
+[2026-04-27 16:39:53](location_finding.py 97): INFO Epoch: 13000, loss: 0.4295, sPCE bound: 7.196000657690499
+[2026-04-27 16:39:53](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:39:57](location_finding.py 97): INFO Epoch: 13050, loss: 0.4510, sPCE bound: 7.177735887182687
+[2026-04-27 16:40:00](location_finding.py 97): INFO Epoch: 13100, loss: 0.3774, sPCE bound: 7.191008083237145
+[2026-04-27 16:40:04](location_finding.py 97): INFO Epoch: 13150, loss: 0.4125, sPCE bound: 7.219864032877419
+[2026-04-27 16:40:08](location_finding.py 97): INFO Epoch: 13200, loss: 0.4003, sPCE bound: 7.211440555466149
+[2026-04-27 16:40:12](location_finding.py 97): INFO Epoch: 13250, loss: 0.4018, sPCE bound: 7.2001463097462395
+[2026-04-27 16:40:15](location_finding.py 97): INFO Epoch: 13300, loss: 0.3819, sPCE bound: 7.219380639208291
+[2026-04-27 16:40:19](location_finding.py 97): INFO Epoch: 13350, loss: 0.3657, sPCE bound: 7.197671822918389
+[2026-04-27 16:40:23](location_finding.py 97): INFO Epoch: 13400, loss: 0.3748, sPCE bound: 7.190392516268227
+[2026-04-27 16:40:27](location_finding.py 97): INFO Epoch: 13450, loss: 0.3652, sPCE bound: 7.235200367582772
+[2026-04-27 16:40:30](location_finding.py 97): INFO Epoch: 13500, loss: 0.3996, sPCE bound: 7.177050582779382
+[2026-04-27 16:40:30](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:40:34](location_finding.py 97): INFO Epoch: 13550, loss: 0.3959, sPCE bound: 7.227571509493325
+[2026-04-27 16:40:38](location_finding.py 97): INFO Epoch: 13600, loss: 0.4064, sPCE bound: 7.187455706013177
+[2026-04-27 16:40:42](location_finding.py 97): INFO Epoch: 13650, loss: 0.4112, sPCE bound: 7.209554545296166
+[2026-04-27 16:40:45](location_finding.py 97): INFO Epoch: 13700, loss: 0.3738, sPCE bound: 7.1951172870526054
+[2026-04-27 16:40:49](location_finding.py 97): INFO Epoch: 13750, loss: 0.4113, sPCE bound: 7.174824647320245
+[2026-04-27 16:40:53](location_finding.py 97): INFO Epoch: 13800, loss: 0.4110, sPCE bound: 7.233497194660638
+[2026-04-27 16:40:57](location_finding.py 97): INFO Epoch: 13850, loss: 0.3671, sPCE bound: 7.2268365246186
+[2026-04-27 16:41:00](location_finding.py 97): INFO Epoch: 13900, loss: 0.4176, sPCE bound: 7.167079470766518
+[2026-04-27 16:41:04](location_finding.py 97): INFO Epoch: 13950, loss: 0.3997, sPCE bound: 7.213278256071542
+[2026-04-27 16:41:08](location_finding.py 97): INFO Epoch: 14000, loss: 0.4025, sPCE bound: 7.178668848885033
+[2026-04-27 16:41:08](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:41:12](location_finding.py 97): INFO Epoch: 14050, loss: 0.4722, sPCE bound: 7.132075153006051
+[2026-04-27 16:41:15](location_finding.py 97): INFO Epoch: 14100, loss: 0.3598, sPCE bound: 7.238649151934121
+[2026-04-27 16:41:19](location_finding.py 97): INFO Epoch: 14150, loss: 0.3752, sPCE bound: 7.217643134010766
+[2026-04-27 16:41:23](location_finding.py 97): INFO Epoch: 14200, loss: 0.3910, sPCE bound: 7.215002469433282
+[2026-04-27 16:41:27](location_finding.py 97): INFO Epoch: 14250, loss: 0.3836, sPCE bound: 7.176414720428918
+[2026-04-27 16:41:30](location_finding.py 97): INFO Epoch: 14300, loss: 0.4361, sPCE bound: 7.1912019771466
+[2026-04-27 16:41:34](location_finding.py 97): INFO Epoch: 14350, loss: 0.4115, sPCE bound: 7.18509509385917
+[2026-04-27 16:41:38](location_finding.py 97): INFO Epoch: 14400, loss: 0.3917, sPCE bound: 7.224708310974572
+[2026-04-27 16:41:42](location_finding.py 97): INFO Epoch: 14450, loss: 0.4185, sPCE bound: 7.182614348543618
+[2026-04-27 16:41:45](location_finding.py 97): INFO Epoch: 14500, loss: 0.3662, sPCE bound: 7.202036313427422
+[2026-04-27 16:41:45](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:41:49](location_finding.py 97): INFO Epoch: 14550, loss: 0.4463, sPCE bound: 7.176071963919137
+[2026-04-27 16:41:53](location_finding.py 97): INFO Epoch: 14600, loss: 0.3883, sPCE bound: 7.217633209837411
+[2026-04-27 16:41:57](location_finding.py 97): INFO Epoch: 14650, loss: 0.4057, sPCE bound: 7.230618528736565
+[2026-04-27 16:42:00](location_finding.py 97): INFO Epoch: 14700, loss: 0.4029, sPCE bound: 7.216492317331765
+[2026-04-27 16:42:04](location_finding.py 97): INFO Epoch: 14750, loss: 0.3667, sPCE bound: 7.208473972691033
+[2026-04-27 16:42:08](location_finding.py 97): INFO Epoch: 14800, loss: 0.3806, sPCE bound: 7.193199746025536
+[2026-04-27 16:42:12](location_finding.py 97): INFO Epoch: 14850, loss: 0.3759, sPCE bound: 7.215052447927926
+[2026-04-27 16:42:15](location_finding.py 97): INFO Epoch: 14900, loss: 0.3940, sPCE bound: 7.212839267862771
+[2026-04-27 16:42:19](location_finding.py 97): INFO Epoch: 14950, loss: 0.4208, sPCE bound: 7.182537041319344
+[2026-04-27 16:42:23](location_finding.py 97): INFO Epoch: 15000, loss: 0.3732, sPCE bound: 7.1988349777588585
+[2026-04-27 16:42:23](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:42:27](location_finding.py 97): INFO Epoch: 15050, loss: 0.3683, sPCE bound: 7.205714694870446
+[2026-04-27 16:42:30](location_finding.py 97): INFO Epoch: 15100, loss: 0.3528, sPCE bound: 7.241096935881112
+[2026-04-27 16:42:34](location_finding.py 97): INFO Epoch: 15150, loss: 0.3640, sPCE bound: 7.2564457875618675
+[2026-04-27 16:42:38](location_finding.py 97): INFO Epoch: 15200, loss: 0.4445, sPCE bound: 7.198879889858697
+[2026-04-27 16:42:42](location_finding.py 97): INFO Epoch: 15250, loss: 0.3908, sPCE bound: 7.190507702244256
+[2026-04-27 16:42:45](location_finding.py 97): INFO Epoch: 15300, loss: 0.3928, sPCE bound: 7.2399684411415794
+[2026-04-27 16:42:49](location_finding.py 97): INFO Epoch: 15350, loss: 0.4067, sPCE bound: 7.212251327646706
+[2026-04-27 16:42:53](location_finding.py 97): INFO Epoch: 15400, loss: 0.4207, sPCE bound: 7.18258728803489
+[2026-04-27 16:42:56](location_finding.py 97): INFO Epoch: 15450, loss: 0.3996, sPCE bound: 7.183124683512185
+[2026-04-27 16:43:00](location_finding.py 97): INFO Epoch: 15500, loss: 0.3602, sPCE bound: 7.2255762142071465
+[2026-04-27 16:43:00](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:43:04](location_finding.py 97): INFO Epoch: 15550, loss: 0.4727, sPCE bound: 7.145960591448281
+[2026-04-27 16:43:08](location_finding.py 97): INFO Epoch: 15600, loss: 0.3596, sPCE bound: 7.247890494478677
+[2026-04-27 16:43:11](location_finding.py 97): INFO Epoch: 15650, loss: 0.3887, sPCE bound: 7.231314174545739
+[2026-04-27 16:43:15](location_finding.py 97): INFO Epoch: 15700, loss: 0.3545, sPCE bound: 7.239818803680871
+[2026-04-27 16:43:19](location_finding.py 97): INFO Epoch: 15750, loss: 0.3453, sPCE bound: 7.225089870108102
+[2026-04-27 16:43:23](location_finding.py 97): INFO Epoch: 15800, loss: 0.3921, sPCE bound: 7.211242906464074
+[2026-04-27 16:43:26](location_finding.py 97): INFO Epoch: 15850, loss: 0.3945, sPCE bound: 7.214874826086495
+[2026-04-27 16:43:30](location_finding.py 97): INFO Epoch: 15900, loss: 0.3738, sPCE bound: 7.2485791665444115
+[2026-04-27 16:43:34](location_finding.py 97): INFO Epoch: 15950, loss: 0.3726, sPCE bound: 7.228903047455285
+[2026-04-27 16:43:37](location_finding.py 97): INFO Epoch: 16000, loss: 0.3946, sPCE bound: 7.204121224297021
+[2026-04-27 16:43:37](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:43:41](location_finding.py 97): INFO Epoch: 16050, loss: 0.3869, sPCE bound: 7.201427213562463
+[2026-04-27 16:43:45](location_finding.py 97): INFO Epoch: 16100, loss: 0.3595, sPCE bound: 7.23222085059974
+[2026-04-27 16:43:49](location_finding.py 97): INFO Epoch: 16150, loss: 0.3645, sPCE bound: 7.240497015131448
+[2026-04-27 16:43:52](location_finding.py 97): INFO Epoch: 16200, loss: 0.4103, sPCE bound: 7.200841657532189
+[2026-04-27 16:43:56](location_finding.py 97): INFO Epoch: 16250, loss: 0.3945, sPCE bound: 7.218498818291161
+[2026-04-27 16:44:00](location_finding.py 97): INFO Epoch: 16300, loss: 0.3889, sPCE bound: 7.190304360998605
+[2026-04-27 16:44:04](location_finding.py 97): INFO Epoch: 16350, loss: 0.4237, sPCE bound: 7.190029225958321
+[2026-04-27 16:44:07](location_finding.py 97): INFO Epoch: 16400, loss: 0.4099, sPCE bound: 7.226829729689095
+[2026-04-27 16:44:11](location_finding.py 97): INFO Epoch: 16450, loss: 0.3899, sPCE bound: 7.1779366654286125
+[2026-04-27 16:44:15](location_finding.py 97): INFO Epoch: 16500, loss: 0.3839, sPCE bound: 7.218513600243066
+[2026-04-27 16:44:15](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:44:19](location_finding.py 97): INFO Epoch: 16550, loss: 0.3826, sPCE bound: 7.251883886469338
+[2026-04-27 16:44:22](location_finding.py 97): INFO Epoch: 16600, loss: 0.3946, sPCE bound: 7.256524674309228
+[2026-04-27 16:44:26](location_finding.py 97): INFO Epoch: 16650, loss: 0.4498, sPCE bound: 7.1597216647991875
+[2026-04-27 16:44:30](location_finding.py 97): INFO Epoch: 16700, loss: 0.3754, sPCE bound: 7.245591781748269
+[2026-04-27 16:44:33](location_finding.py 97): INFO Epoch: 16750, loss: 0.3732, sPCE bound: 7.2401195687184075
+[2026-04-27 16:44:37](location_finding.py 97): INFO Epoch: 16800, loss: 0.3283, sPCE bound: 7.193518273247216
+[2026-04-27 16:44:41](location_finding.py 97): INFO Epoch: 16850, loss: 0.4017, sPCE bound: 7.171411476744149
+[2026-04-27 16:44:45](location_finding.py 97): INFO Epoch: 16900, loss: 0.3781, sPCE bound: 7.230247549427483
+[2026-04-27 16:44:48](location_finding.py 97): INFO Epoch: 16950, loss: 0.3779, sPCE bound: 7.240691654098962
+[2026-04-27 16:44:52](location_finding.py 97): INFO Epoch: 17000, loss: 0.3448, sPCE bound: 7.223454139841531
+[2026-04-27 16:44:52](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:44:56](location_finding.py 97): INFO Epoch: 17050, loss: 0.3665, sPCE bound: 7.223486058128808
+[2026-04-27 16:45:00](location_finding.py 97): INFO Epoch: 17100, loss: 0.3771, sPCE bound: 7.24974455655906
+[2026-04-27 16:45:03](location_finding.py 97): INFO Epoch: 17150, loss: 0.4044, sPCE bound: 7.195965550554726
+[2026-04-27 16:45:07](location_finding.py 97): INFO Epoch: 17200, loss: 0.3749, sPCE bound: 7.234454475058053
+[2026-04-27 16:45:11](location_finding.py 97): INFO Epoch: 17250, loss: 0.3726, sPCE bound: 7.244135252846215
+[2026-04-27 16:45:14](location_finding.py 97): INFO Epoch: 17300, loss: 0.3978, sPCE bound: 7.28178065241668
+[2026-04-27 16:45:18](location_finding.py 97): INFO Epoch: 17350, loss: 0.3829, sPCE bound: 7.213072500837777
+[2026-04-27 16:45:22](location_finding.py 97): INFO Epoch: 17400, loss: 0.3740, sPCE bound: 7.185234628332589
+[2026-04-27 16:45:26](location_finding.py 97): INFO Epoch: 17450, loss: 0.4107, sPCE bound: 7.243971906317208
+[2026-04-27 16:45:29](location_finding.py 97): INFO Epoch: 17500, loss: 0.3960, sPCE bound: 7.220339081896279
+[2026-04-27 16:45:29](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:45:33](location_finding.py 97): INFO Epoch: 17550, loss: 0.4395, sPCE bound: 7.1867542487511376
+[2026-04-27 16:45:37](location_finding.py 97): INFO Epoch: 17600, loss: 0.3744, sPCE bound: 7.23896317900512
+[2026-04-27 16:45:40](location_finding.py 97): INFO Epoch: 17650, loss: 0.3660, sPCE bound: 7.23728802026603
+[2026-04-27 16:45:44](location_finding.py 97): INFO Epoch: 17700, loss: 0.3615, sPCE bound: 7.238671593082879
+[2026-04-27 16:45:48](location_finding.py 97): INFO Epoch: 17750, loss: 0.3400, sPCE bound: 7.2375531715283135
+[2026-04-27 16:45:52](location_finding.py 97): INFO Epoch: 17800, loss: 0.3492, sPCE bound: 7.233750246180032
+[2026-04-27 16:45:55](location_finding.py 97): INFO Epoch: 17850, loss: 0.3786, sPCE bound: 7.23091178358886
+[2026-04-27 16:45:59](location_finding.py 97): INFO Epoch: 17900, loss: 0.3520, sPCE bound: 7.260851822508309
+[2026-04-27 16:46:03](location_finding.py 97): INFO Epoch: 17950, loss: 0.3701, sPCE bound: 7.233793072117303
+[2026-04-27 16:46:06](location_finding.py 97): INFO Epoch: 18000, loss: 0.3388, sPCE bound: 7.265045307291482
+[2026-04-27 16:46:06](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:46:10](location_finding.py 97): INFO Epoch: 18050, loss: 0.3652, sPCE bound: 7.223754517448876
+[2026-04-27 16:46:14](location_finding.py 97): INFO Epoch: 18100, loss: 0.3434, sPCE bound: 7.252870909584496
+[2026-04-27 16:46:18](location_finding.py 97): INFO Epoch: 18150, loss: 0.3865, sPCE bound: 7.230920366657708
+[2026-04-27 16:46:21](location_finding.py 97): INFO Epoch: 18200, loss: 0.3844, sPCE bound: 7.183791868103478
+[2026-04-27 16:46:25](location_finding.py 97): INFO Epoch: 18250, loss: 0.3537, sPCE bound: 7.249023757589791
+[2026-04-27 16:46:29](location_finding.py 97): INFO Epoch: 18300, loss: 0.3716, sPCE bound: 7.227608553780053
+[2026-04-27 16:46:33](location_finding.py 97): INFO Epoch: 18350, loss: 0.3784, sPCE bound: 7.2298172336945274
+[2026-04-27 16:46:36](location_finding.py 97): INFO Epoch: 18400, loss: 0.3482, sPCE bound: 7.240581057680581
+[2026-04-27 16:46:40](location_finding.py 97): INFO Epoch: 18450, loss: 0.4030, sPCE bound: 7.212015740288232
+[2026-04-27 16:46:44](location_finding.py 97): INFO Epoch: 18500, loss: 0.3807, sPCE bound: 7.22155680478904
+[2026-04-27 16:46:44](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:46:47](location_finding.py 97): INFO Epoch: 18550, loss: 0.3941, sPCE bound: 7.242591105116341
+[2026-04-27 16:46:51](location_finding.py 97): INFO Epoch: 18600, loss: 0.3418, sPCE bound: 7.2543252331146935
+[2026-04-27 16:46:55](location_finding.py 97): INFO Epoch: 18650, loss: 0.3635, sPCE bound: 7.245844237221215
+[2026-04-27 16:46:59](location_finding.py 97): INFO Epoch: 18700, loss: 0.3794, sPCE bound: 7.261646054399941
+[2026-04-27 16:47:02](location_finding.py 97): INFO Epoch: 18750, loss: 0.3571, sPCE bound: 7.268924765003655
+[2026-04-27 16:47:06](location_finding.py 97): INFO Epoch: 18800, loss: 0.3791, sPCE bound: 7.209559105051492
+[2026-04-27 16:47:10](location_finding.py 97): INFO Epoch: 18850, loss: 0.3583, sPCE bound: 7.211566678894494
+[2026-04-27 16:47:14](location_finding.py 97): INFO Epoch: 18900, loss: 0.3604, sPCE bound: 7.251375250233147
+[2026-04-27 16:47:17](location_finding.py 97): INFO Epoch: 18950, loss: 0.3877, sPCE bound: 7.227488510025475
+[2026-04-27 16:47:21](location_finding.py 97): INFO Epoch: 19000, loss: 0.3689, sPCE bound: 7.224368802917931
+[2026-04-27 16:47:21](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:47:25](location_finding.py 97): INFO Epoch: 19050, loss: 0.4443, sPCE bound: 7.169861547363732
+[2026-04-27 16:47:29](location_finding.py 97): INFO Epoch: 19100, loss: 0.3784, sPCE bound: 7.253149680508111
+[2026-04-27 16:47:32](location_finding.py 97): INFO Epoch: 19150, loss: 0.3474, sPCE bound: 7.228190980566476
+[2026-04-27 16:47:36](location_finding.py 97): INFO Epoch: 19200, loss: 0.3370, sPCE bound: 7.257013670814965
+[2026-04-27 16:47:40](location_finding.py 97): INFO Epoch: 19250, loss: 0.3607, sPCE bound: 7.223618648661111
+[2026-04-27 16:47:43](location_finding.py 97): INFO Epoch: 19300, loss: 0.3458, sPCE bound: 7.232586584700082
+[2026-04-27 16:47:47](location_finding.py 97): INFO Epoch: 19350, loss: 0.3334, sPCE bound: 7.25132422865722
+[2026-04-27 16:47:51](location_finding.py 97): INFO Epoch: 19400, loss: 0.3492, sPCE bound: 7.242578319920037
+[2026-04-27 16:47:55](location_finding.py 97): INFO Epoch: 19450, loss: 0.3884, sPCE bound: 7.232816897047494
+[2026-04-27 16:47:58](location_finding.py 97): INFO Epoch: 19500, loss: 0.4088, sPCE bound: 7.1893663030991295
+[2026-04-27 16:47:58](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:48:02](location_finding.py 97): INFO Epoch: 19550, loss: 0.3603, sPCE bound: 7.252800427092049
+[2026-04-27 16:48:06](location_finding.py 97): INFO Epoch: 19600, loss: 0.3758, sPCE bound: 7.237648717773888
+[2026-04-27 16:48:10](location_finding.py 97): INFO Epoch: 19650, loss: 0.3965, sPCE bound: 7.238368831289742
+[2026-04-27 16:48:13](location_finding.py 97): INFO Epoch: 19700, loss: 0.3791, sPCE bound: 7.183167092216943
+[2026-04-27 16:48:17](location_finding.py 97): INFO Epoch: 19750, loss: 0.3570, sPCE bound: 7.2394379598030785
+[2026-04-27 16:48:21](location_finding.py 97): INFO Epoch: 19800, loss: 0.3759, sPCE bound: 7.2635050338635185
+[2026-04-27 16:48:24](location_finding.py 97): INFO Epoch: 19850, loss: 0.3561, sPCE bound: 7.24168329657409
+[2026-04-27 16:48:28](location_finding.py 97): INFO Epoch: 19900, loss: 0.3763, sPCE bound: 7.294269554031823
+[2026-04-27 16:48:32](location_finding.py 97): INFO Epoch: 19950, loss: 0.3711, sPCE bound: 7.252250306023095
+[2026-04-27 16:48:35](location_finding.py 97): INFO Epoch: 20000, loss: 0.3645, sPCE bound: 7.2588877302536705
+[2026-04-27 16:48:36](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:48:39](location_finding.py 97): INFO Epoch: 20050, loss: 0.3400, sPCE bound: 7.243327103270028
+[2026-04-27 16:48:43](location_finding.py 97): INFO Epoch: 20100, loss: 0.3437, sPCE bound: 7.236697099817727
+[2026-04-27 16:48:47](location_finding.py 97): INFO Epoch: 20150, loss: 0.3511, sPCE bound: 7.238181136263345
+[2026-04-27 16:48:50](location_finding.py 97): INFO Epoch: 20200, loss: 0.3836, sPCE bound: 7.251918159140084
+[2026-04-27 16:48:54](location_finding.py 97): INFO Epoch: 20250, loss: 0.3479, sPCE bound: 7.2405157607922295
+[2026-04-27 16:48:58](location_finding.py 97): INFO Epoch: 20300, loss: 0.3474, sPCE bound: 7.264454178226922
+[2026-04-27 16:49:02](location_finding.py 97): INFO Epoch: 20350, loss: 0.3400, sPCE bound: 7.251687250746224
+[2026-04-27 16:49:05](location_finding.py 97): INFO Epoch: 20400, loss: 0.3492, sPCE bound: 7.235976032627557
+[2026-04-27 16:49:09](location_finding.py 97): INFO Epoch: 20450, loss: 0.3531, sPCE bound: 7.225358389032815
+[2026-04-27 16:49:13](location_finding.py 97): INFO Epoch: 20500, loss: 0.3525, sPCE bound: 7.244088612211678
+[2026-04-27 16:49:13](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:49:17](location_finding.py 97): INFO Epoch: 20550, loss: 0.3554, sPCE bound: 7.228541962517236
+[2026-04-27 16:49:20](location_finding.py 97): INFO Epoch: 20600, loss: 0.3731, sPCE bound: 7.214252404583428
+[2026-04-27 16:49:24](location_finding.py 97): INFO Epoch: 20650, loss: 0.3078, sPCE bound: 7.227741293323968
+[2026-04-27 16:49:28](location_finding.py 97): INFO Epoch: 20700, loss: 0.3581, sPCE bound: 7.253758243931268
+[2026-04-27 16:49:32](location_finding.py 97): INFO Epoch: 20750, loss: 0.3371, sPCE bound: 7.225768826616738
+[2026-04-27 16:49:35](location_finding.py 97): INFO Epoch: 20800, loss: 0.3414, sPCE bound: 7.232428751600716
+[2026-04-27 16:49:39](location_finding.py 97): INFO Epoch: 20850, loss: 0.3335, sPCE bound: 7.248871288908456
+[2026-04-27 16:49:43](location_finding.py 97): INFO Epoch: 20900, loss: 0.3827, sPCE bound: 7.259026966703866
+[2026-04-27 16:49:46](location_finding.py 97): INFO Epoch: 20950, loss: 0.3728, sPCE bound: 7.251337192667458
+[2026-04-27 16:49:50](location_finding.py 97): INFO Epoch: 21000, loss: 0.3698, sPCE bound: 7.22740568937156
+[2026-04-27 16:49:50](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:49:54](location_finding.py 97): INFO Epoch: 21050, loss: 0.3891, sPCE bound: 7.242991946352456
+[2026-04-27 16:49:58](location_finding.py 97): INFO Epoch: 21100, loss: 0.3743, sPCE bound: 7.235687277925942
+[2026-04-27 16:50:01](location_finding.py 97): INFO Epoch: 21150, loss: 0.3568, sPCE bound: 7.235902003658746
+[2026-04-27 16:50:05](location_finding.py 97): INFO Epoch: 21200, loss: 0.3431, sPCE bound: 7.242408029449914
+[2026-04-27 16:50:09](location_finding.py 97): INFO Epoch: 21250, loss: 0.3333, sPCE bound: 7.252044520987008
+[2026-04-27 16:50:13](location_finding.py 97): INFO Epoch: 21300, loss: 0.3561, sPCE bound: 7.231222800625298
+[2026-04-27 16:50:16](location_finding.py 97): INFO Epoch: 21350, loss: 0.3890, sPCE bound: 7.176646254671548
+[2026-04-27 16:50:20](location_finding.py 97): INFO Epoch: 21400, loss: 0.3095, sPCE bound: 7.227643780125115
+[2026-04-27 16:50:24](location_finding.py 97): INFO Epoch: 21450, loss: 0.3736, sPCE bound: 7.258892766846154
+[2026-04-27 16:50:27](location_finding.py 97): INFO Epoch: 21500, loss: 0.3730, sPCE bound: 7.223585717094872
+[2026-04-27 16:50:27](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:50:31](location_finding.py 97): INFO Epoch: 21550, loss: 0.3473, sPCE bound: 7.256584815395806
+[2026-04-27 16:50:35](location_finding.py 97): INFO Epoch: 21600, loss: 0.3984, sPCE bound: 7.163032345188592
+[2026-04-27 16:50:39](location_finding.py 97): INFO Epoch: 21650, loss: 0.3618, sPCE bound: 7.225173525227044
+[2026-04-27 16:50:42](location_finding.py 97): INFO Epoch: 21700, loss: 0.3423, sPCE bound: 7.258842639339898
+[2026-04-27 16:50:46](location_finding.py 97): INFO Epoch: 21750, loss: 0.3598, sPCE bound: 7.242499313963387
+[2026-04-27 16:50:50](location_finding.py 97): INFO Epoch: 21800, loss: 0.3228, sPCE bound: 7.271476737869714
+[2026-04-27 16:50:54](location_finding.py 97): INFO Epoch: 21850, loss: 0.3699, sPCE bound: 7.2244589847454765
+[2026-04-27 16:50:57](location_finding.py 97): INFO Epoch: 21900, loss: 0.3016, sPCE bound: 7.2555549365410545
+[2026-04-27 16:51:01](location_finding.py 97): INFO Epoch: 21950, loss: 0.3570, sPCE bound: 7.248262397659753
+[2026-04-27 16:51:05](location_finding.py 97): INFO Epoch: 22000, loss: 0.3743, sPCE bound: 7.224975876224969
+[2026-04-27 16:51:05](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:51:08](location_finding.py 97): INFO Epoch: 22050, loss: 0.3468, sPCE bound: 7.2131434899697044
+[2026-04-27 16:51:12](location_finding.py 97): INFO Epoch: 22100, loss: 0.3393, sPCE bound: 7.251339845074151
+[2026-04-27 16:51:16](location_finding.py 97): INFO Epoch: 22150, loss: 0.3586, sPCE bound: 7.246043465746377
+[2026-04-27 16:51:20](location_finding.py 97): INFO Epoch: 22200, loss: 0.3811, sPCE bound: 7.24900688947532
+[2026-04-27 16:51:23](location_finding.py 97): INFO Epoch: 22250, loss: 0.3780, sPCE bound: 7.218265972746346
+[2026-04-27 16:51:27](location_finding.py 97): INFO Epoch: 22300, loss: 0.3270, sPCE bound: 7.268889985693429
+[2026-04-27 16:51:31](location_finding.py 97): INFO Epoch: 22350, loss: 0.3694, sPCE bound: 7.25655391038749
+[2026-04-27 16:51:35](location_finding.py 97): INFO Epoch: 22400, loss: 0.3489, sPCE bound: 7.218509994162057
+[2026-04-27 16:51:38](location_finding.py 97): INFO Epoch: 22450, loss: 0.3443, sPCE bound: 7.287161342514489
+[2026-04-27 16:51:42](location_finding.py 97): INFO Epoch: 22500, loss: 0.3649, sPCE bound: 7.2272797447571495
+[2026-04-27 16:51:42](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:51:46](location_finding.py 97): INFO Epoch: 22550, loss: 0.3431, sPCE bound: 7.238181642902825
+[2026-04-27 16:51:49](location_finding.py 97): INFO Epoch: 22600, loss: 0.3249, sPCE bound: 7.265447459829781
+[2026-04-27 16:51:53](location_finding.py 97): INFO Epoch: 22650, loss: 0.3474, sPCE bound: 7.276209406269524
+[2026-04-27 16:51:57](location_finding.py 97): INFO Epoch: 22700, loss: 0.3555, sPCE bound: 7.263869158638451
+[2026-04-27 16:52:01](location_finding.py 97): INFO Epoch: 22750, loss: 0.3443, sPCE bound: 7.217411838186715
+[2026-04-27 16:52:04](location_finding.py 97): INFO Epoch: 22800, loss: 0.3526, sPCE bound: 7.250761203182671
+[2026-04-27 16:52:08](location_finding.py 97): INFO Epoch: 22850, loss: 0.3316, sPCE bound: 7.262026302231286
+[2026-04-27 16:52:12](location_finding.py 97): INFO Epoch: 22900, loss: 0.3534, sPCE bound: 7.256888322247002
+[2026-04-27 16:52:16](location_finding.py 97): INFO Epoch: 22950, loss: 0.3781, sPCE bound: 7.2234562856087425
+[2026-04-27 16:52:19](location_finding.py 97): INFO Epoch: 23000, loss: 0.3492, sPCE bound: 7.218227974785302
+[2026-04-27 16:52:19](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:52:23](location_finding.py 97): INFO Epoch: 23050, loss: 0.3460, sPCE bound: 7.25220780791137
+[2026-04-27 16:52:27](location_finding.py 97): INFO Epoch: 23100, loss: 0.3188, sPCE bound: 7.250972710264657
+[2026-04-27 16:52:31](location_finding.py 97): INFO Epoch: 23150, loss: 0.3545, sPCE bound: 7.252401672018502
+[2026-04-27 16:52:34](location_finding.py 97): INFO Epoch: 23200, loss: 0.3664, sPCE bound: 7.270233623398278
+[2026-04-27 16:52:38](location_finding.py 97): INFO Epoch: 23250, loss: 0.3389, sPCE bound: 7.298560224188302
+[2026-04-27 16:52:42](location_finding.py 97): INFO Epoch: 23300, loss: 0.3071, sPCE bound: 7.259296230686639
+[2026-04-27 16:52:46](location_finding.py 97): INFO Epoch: 23350, loss: 0.3092, sPCE bound: 7.263552955997918
+[2026-04-27 16:52:49](location_finding.py 97): INFO Epoch: 23400, loss: 0.3508, sPCE bound: 7.27237798990104
+[2026-04-27 16:52:53](location_finding.py 97): INFO Epoch: 23450, loss: 0.3442, sPCE bound: 7.275124989164803
+[2026-04-27 16:52:57](location_finding.py 97): INFO Epoch: 23500, loss: 0.3449, sPCE bound: 7.257121525419686
+[2026-04-27 16:52:57](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:53:01](location_finding.py 97): INFO Epoch: 23550, loss: 0.3306, sPCE bound: 7.270964137924645
+[2026-04-27 16:53:04](location_finding.py 97): INFO Epoch: 23600, loss: 0.3013, sPCE bound: 7.260354660166238
+[2026-04-27 16:53:08](location_finding.py 97): INFO Epoch: 23650, loss: 0.3416, sPCE bound: 7.267493419064019
+[2026-04-27 16:53:12](location_finding.py 97): INFO Epoch: 23700, loss: 0.3538, sPCE bound: 7.270881883514855
+[2026-04-27 16:53:16](location_finding.py 97): INFO Epoch: 23750, loss: 0.3158, sPCE bound: 7.25826501072738
+[2026-04-27 16:53:19](location_finding.py 97): INFO Epoch: 23800, loss: 0.3529, sPCE bound: 7.267329834116433
+[2026-04-27 16:53:23](location_finding.py 97): INFO Epoch: 23850, loss: 0.3462, sPCE bound: 7.23612572969291
+[2026-04-27 16:53:27](location_finding.py 97): INFO Epoch: 23900, loss: 0.3556, sPCE bound: 7.226981542719338
+[2026-04-27 16:53:30](location_finding.py 97): INFO Epoch: 23950, loss: 0.3203, sPCE bound: 7.26709764422271
+[2026-04-27 16:53:34](location_finding.py 97): INFO Epoch: 24000, loss: 0.3365, sPCE bound: 7.2656524104008415
+[2026-04-27 16:53:34](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:53:38](location_finding.py 97): INFO Epoch: 24050, loss: 0.3143, sPCE bound: 7.276013336790536
+[2026-04-27 16:53:42](location_finding.py 97): INFO Epoch: 24100, loss: 0.3165, sPCE bound: 7.281310610187981
+[2026-04-27 16:53:45](location_finding.py 97): INFO Epoch: 24150, loss: 0.3665, sPCE bound: 7.242123923910592
+[2026-04-27 16:53:49](location_finding.py 97): INFO Epoch: 24200, loss: 0.3669, sPCE bound: 7.300371966970895
+[2026-04-27 16:53:53](location_finding.py 97): INFO Epoch: 24250, loss: 0.3234, sPCE bound: 7.231053434027169
+[2026-04-27 16:53:57](location_finding.py 97): INFO Epoch: 24300, loss: 0.3183, sPCE bound: 7.294871292723153
+[2026-04-27 16:54:00](location_finding.py 97): INFO Epoch: 24350, loss: 0.3180, sPCE bound: 7.278137407911752
+[2026-04-27 16:54:04](location_finding.py 97): INFO Epoch: 24400, loss: 0.3582, sPCE bound: 7.253645293129418
+[2026-04-27 16:54:08](location_finding.py 97): INFO Epoch: 24450, loss: 0.3574, sPCE bound: 7.237095229042504
+[2026-04-27 16:54:12](location_finding.py 97): INFO Epoch: 24500, loss: 0.3543, sPCE bound: 7.279190770996545
+[2026-04-27 16:54:12](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:54:15](location_finding.py 97): INFO Epoch: 24550, loss: 0.3396, sPCE bound: 7.250784180773232
+[2026-04-27 16:54:19](location_finding.py 97): INFO Epoch: 24600, loss: 0.3407, sPCE bound: 7.26483684004638
+[2026-04-27 16:54:23](location_finding.py 97): INFO Epoch: 24650, loss: 0.3411, sPCE bound: 7.275800488604043
+[2026-04-27 16:54:27](location_finding.py 97): INFO Epoch: 24700, loss: 0.3454, sPCE bound: 7.251728735578988
+[2026-04-27 16:54:30](location_finding.py 97): INFO Epoch: 24750, loss: 0.3157, sPCE bound: 7.238936356914971
+[2026-04-27 16:54:34](location_finding.py 97): INFO Epoch: 24800, loss: 0.3326, sPCE bound: 7.250544719112847
+[2026-04-27 16:54:38](location_finding.py 97): INFO Epoch: 24850, loss: 0.3159, sPCE bound: 7.248338184965585
+[2026-04-27 16:54:42](location_finding.py 97): INFO Epoch: 24900, loss: 0.3509, sPCE bound: 7.26519831241462
+[2026-04-27 16:54:45](location_finding.py 97): INFO Epoch: 24950, loss: 0.3255, sPCE bound: 7.254542760265801
+[2026-04-27 16:54:49](location_finding.py 97): INFO Epoch: 25000, loss: 0.3417, sPCE bound: 7.265152327431176
+[2026-04-27 16:54:49](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:54:53](location_finding.py 97): INFO Epoch: 25050, loss: 0.3373, sPCE bound: 7.268689565075372
+[2026-04-27 16:54:56](location_finding.py 97): INFO Epoch: 25100, loss: 0.3316, sPCE bound: 7.249960086954568
+[2026-04-27 16:55:00](location_finding.py 97): INFO Epoch: 25150, loss: 0.3367, sPCE bound: 7.24873217166755
+[2026-04-27 16:55:04](location_finding.py 97): INFO Epoch: 25200, loss: 0.3231, sPCE bound: 7.24398928107116
+[2026-04-27 16:55:08](location_finding.py 97): INFO Epoch: 25250, loss: 0.3326, sPCE bound: 7.28616132558677
+[2026-04-27 16:55:11](location_finding.py 97): INFO Epoch: 25300, loss: 0.3575, sPCE bound: 7.268136493576501
+[2026-04-27 16:55:15](location_finding.py 97): INFO Epoch: 25350, loss: 0.3528, sPCE bound: 7.246368936909173
+[2026-04-27 16:55:19](location_finding.py 97): INFO Epoch: 25400, loss: 0.3132, sPCE bound: 7.255256466282342
+[2026-04-27 16:55:23](location_finding.py 97): INFO Epoch: 25450, loss: 0.3369, sPCE bound: 7.24294232548568
+[2026-04-27 16:55:26](location_finding.py 97): INFO Epoch: 25500, loss: 0.3408, sPCE bound: 7.281182251585458
+[2026-04-27 16:55:26](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:55:30](location_finding.py 97): INFO Epoch: 25550, loss: 0.3342, sPCE bound: 7.266849569691155
+[2026-04-27 16:55:34](location_finding.py 97): INFO Epoch: 25600, loss: 0.3270, sPCE bound: 7.296049259317849
+[2026-04-27 16:55:38](location_finding.py 97): INFO Epoch: 25650, loss: 0.3309, sPCE bound: 7.270761571539376
+[2026-04-27 16:55:41](location_finding.py 97): INFO Epoch: 25700, loss: 0.3172, sPCE bound: 7.287453733099435
+[2026-04-27 16:55:45](location_finding.py 97): INFO Epoch: 25750, loss: 0.3375, sPCE bound: 7.208812169445489
+[2026-04-27 16:55:49](location_finding.py 97): INFO Epoch: 25800, loss: 0.3266, sPCE bound: 7.258726440084908
+[2026-04-27 16:55:52](location_finding.py 97): INFO Epoch: 25850, loss: 0.3197, sPCE bound: 7.2799972814450005
+[2026-04-27 16:55:56](location_finding.py 97): INFO Epoch: 25900, loss: 0.3384, sPCE bound: 7.276114426268075
+[2026-04-27 16:56:00](location_finding.py 97): INFO Epoch: 25950, loss: 0.3353, sPCE bound: 7.273131929052804
+[2026-04-27 16:56:04](location_finding.py 97): INFO Epoch: 26000, loss: 0.3796, sPCE bound: 7.2623444420227745
+[2026-04-27 16:56:04](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:56:07](location_finding.py 97): INFO Epoch: 26050, loss: 0.3401, sPCE bound: 7.245640508545373
+[2026-04-27 16:56:11](location_finding.py 97): INFO Epoch: 26100, loss: 0.3812, sPCE bound: 7.262465469253991
+[2026-04-27 16:56:15](location_finding.py 97): INFO Epoch: 26150, loss: 0.3597, sPCE bound: 7.226524911535714
+[2026-04-27 16:56:19](location_finding.py 97): INFO Epoch: 26200, loss: 0.3057, sPCE bound: 7.259888343227837
+[2026-04-27 16:56:22](location_finding.py 97): INFO Epoch: 26250, loss: 0.3828, sPCE bound: 7.243270627869103
+[2026-04-27 16:56:26](location_finding.py 97): INFO Epoch: 26300, loss: 0.3976, sPCE bound: 7.208929203165505
+[2026-04-27 16:56:30](location_finding.py 97): INFO Epoch: 26350, loss: 0.3526, sPCE bound: 7.222818039072488
+[2026-04-27 16:56:33](location_finding.py 97): INFO Epoch: 26400, loss: 0.3331, sPCE bound: 7.293588153732751
+[2026-04-27 16:56:37](location_finding.py 97): INFO Epoch: 26450, loss: 0.3601, sPCE bound: 7.252328864944909
+[2026-04-27 16:56:41](location_finding.py 97): INFO Epoch: 26500, loss: 0.3206, sPCE bound: 7.264193825138543
+[2026-04-27 16:56:41](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:56:45](location_finding.py 97): INFO Epoch: 26550, loss: 0.3563, sPCE bound: 7.31066500367019
+[2026-04-27 16:56:48](location_finding.py 97): INFO Epoch: 26600, loss: 0.3525, sPCE bound: 7.242018095863793
+[2026-04-27 16:56:52](location_finding.py 97): INFO Epoch: 26650, loss: 0.3370, sPCE bound: 7.265450946701501
+[2026-04-27 16:56:56](location_finding.py 97): INFO Epoch: 26700, loss: 0.3135, sPCE bound: 7.282258681667779
+[2026-04-27 16:56:59](location_finding.py 97): INFO Epoch: 26750, loss: 0.3426, sPCE bound: 7.262277923239205
+[2026-04-27 16:57:03](location_finding.py 97): INFO Epoch: 26800, loss: 0.3166, sPCE bound: 7.2748570364842156
+[2026-04-27 16:57:07](location_finding.py 97): INFO Epoch: 26850, loss: 0.2959, sPCE bound: 7.273848496092294
+[2026-04-27 16:57:11](location_finding.py 97): INFO Epoch: 26900, loss: 0.3277, sPCE bound: 7.270717851532433
+[2026-04-27 16:57:14](location_finding.py 97): INFO Epoch: 26950, loss: 0.3114, sPCE bound: 7.267655752314065
+[2026-04-27 16:57:18](location_finding.py 97): INFO Epoch: 27000, loss: 0.3463, sPCE bound: 7.253091297758553
+[2026-04-27 16:57:18](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:57:22](location_finding.py 97): INFO Epoch: 27050, loss: 0.3278, sPCE bound: 7.29180251778457
+[2026-04-27 16:57:26](location_finding.py 97): INFO Epoch: 27100, loss: 0.3306, sPCE bound: 7.27884497464988
+[2026-04-27 16:57:29](location_finding.py 97): INFO Epoch: 27150, loss: 0.3367, sPCE bound: 7.227244130981896
+[2026-04-27 16:57:33](location_finding.py 97): INFO Epoch: 27200, loss: 0.3110, sPCE bound: 7.255244485748742
+[2026-04-27 16:57:37](location_finding.py 97): INFO Epoch: 27250, loss: 0.2931, sPCE bound: 7.276401869667504
+[2026-04-27 16:57:40](location_finding.py 97): INFO Epoch: 27300, loss: 0.3177, sPCE bound: 7.303567789209817
+[2026-04-27 16:57:44](location_finding.py 97): INFO Epoch: 27350, loss: 0.3174, sPCE bound: 7.24997671665046
+[2026-04-27 16:57:48](location_finding.py 97): INFO Epoch: 27400, loss: 0.3333, sPCE bound: 7.279242001188729
+[2026-04-27 16:57:51](location_finding.py 97): INFO Epoch: 27450, loss: 0.3503, sPCE bound: 7.277586720598672
+[2026-04-27 16:57:55](location_finding.py 97): INFO Epoch: 27500, loss: 0.3357, sPCE bound: 7.267937086237405
+[2026-04-27 16:57:55](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:57:59](location_finding.py 97): INFO Epoch: 27550, loss: 0.3296, sPCE bound: 7.2813957852253655
+[2026-04-27 16:58:03](location_finding.py 97): INFO Epoch: 27600, loss: 0.3022, sPCE bound: 7.287559829367135
+[2026-04-27 16:58:06](location_finding.py 97): INFO Epoch: 27650, loss: 0.3341, sPCE bound: 7.294961027515862
+[2026-04-27 16:58:10](location_finding.py 97): INFO Epoch: 27700, loss: 0.3327, sPCE bound: 7.239271454227898
+[2026-04-27 16:58:14](location_finding.py 97): INFO Epoch: 27750, loss: 0.3339, sPCE bound: 7.263656757486794
+[2026-04-27 16:58:18](location_finding.py 97): INFO Epoch: 27800, loss: 0.3527, sPCE bound: 7.2557405752072075
+[2026-04-27 16:58:21](location_finding.py 97): INFO Epoch: 27850, loss: 0.3432, sPCE bound: 7.278437308681939
+[2026-04-27 16:58:25](location_finding.py 97): INFO Epoch: 27900, loss: 0.3373, sPCE bound: 7.273961983335946
+[2026-04-27 16:58:29](location_finding.py 97): INFO Epoch: 27950, loss: 0.3361, sPCE bound: 7.259645513905022
+[2026-04-27 16:58:32](location_finding.py 97): INFO Epoch: 28000, loss: 0.3533, sPCE bound: 7.233646712912057
+[2026-04-27 16:58:32](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:58:36](location_finding.py 97): INFO Epoch: 28050, loss: 0.3327, sPCE bound: 7.281732551468346
+[2026-04-27 16:58:40](location_finding.py 97): INFO Epoch: 28100, loss: 0.3390, sPCE bound: 7.267182700050805
+[2026-04-27 16:58:44](location_finding.py 97): INFO Epoch: 28150, loss: 0.3379, sPCE bound: 7.250528923881982
+[2026-04-27 16:58:47](location_finding.py 97): INFO Epoch: 28200, loss: 0.3163, sPCE bound: 7.268913380516503
+[2026-04-27 16:58:51](location_finding.py 97): INFO Epoch: 28250, loss: 0.3523, sPCE bound: 7.242651663435433
+[2026-04-27 16:58:55](location_finding.py 97): INFO Epoch: 28300, loss: 0.3499, sPCE bound: 7.2736680728325585
+[2026-04-27 16:58:58](location_finding.py 97): INFO Epoch: 28350, loss: 0.3653, sPCE bound: 7.263249061716531
+[2026-04-27 16:59:02](location_finding.py 97): INFO Epoch: 28400, loss: 0.3279, sPCE bound: 7.2680157941708305
+[2026-04-27 16:59:06](location_finding.py 97): INFO Epoch: 28450, loss: 0.3148, sPCE bound: 7.292518518579934
+[2026-04-27 16:59:10](location_finding.py 97): INFO Epoch: 28500, loss: 0.2885, sPCE bound: 7.312278918636773
+[2026-04-27 16:59:10](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:59:13](location_finding.py 97): INFO Epoch: 28550, loss: 0.3316, sPCE bound: 7.273877851379845
+[2026-04-27 16:59:17](location_finding.py 97): INFO Epoch: 28600, loss: 0.3156, sPCE bound: 7.287610135687325
+[2026-04-27 16:59:21](location_finding.py 97): INFO Epoch: 28650, loss: 0.3275, sPCE bound: 7.24388106883857
+[2026-04-27 16:59:25](location_finding.py 97): INFO Epoch: 28700, loss: 0.3326, sPCE bound: 7.282612256420586
+[2026-04-27 16:59:28](location_finding.py 97): INFO Epoch: 28750, loss: 0.3319, sPCE bound: 7.2978314679989555
+[2026-04-27 16:59:32](location_finding.py 97): INFO Epoch: 28800, loss: 0.3003, sPCE bound: 7.271382145298455
+[2026-04-27 16:59:36](location_finding.py 97): INFO Epoch: 28850, loss: 0.3158, sPCE bound: 7.269193492544625
+[2026-04-27 16:59:39](location_finding.py 97): INFO Epoch: 28900, loss: 0.3160, sPCE bound: 7.251247457874749
+[2026-04-27 16:59:43](location_finding.py 97): INFO Epoch: 28950, loss: 0.3088, sPCE bound: 7.297235630167458
+[2026-04-27 16:59:47](location_finding.py 97): INFO Epoch: 29000, loss: 0.3077, sPCE bound: 7.27510534943435
+[2026-04-27 16:59:47](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 16:59:50](location_finding.py 97): INFO Epoch: 29050, loss: 0.3412, sPCE bound: 7.254160605085824
+[2026-04-27 16:59:54](location_finding.py 97): INFO Epoch: 29100, loss: 0.3490, sPCE bound: 7.267046294821236
+[2026-04-27 16:59:58](location_finding.py 97): INFO Epoch: 29150, loss: 0.3240, sPCE bound: 7.293006472004388
+[2026-04-27 17:00:02](location_finding.py 97): INFO Epoch: 29200, loss: 0.3390, sPCE bound: 7.26738958777282
+[2026-04-27 17:00:05](location_finding.py 97): INFO Epoch: 29250, loss: 0.3269, sPCE bound: 7.222792498482201
+[2026-04-27 17:00:09](location_finding.py 97): INFO Epoch: 29300, loss: 0.3310, sPCE bound: 7.24581297458503
+[2026-04-27 17:00:13](location_finding.py 97): INFO Epoch: 29350, loss: 0.3111, sPCE bound: 7.272064886702035
+[2026-04-27 17:00:17](location_finding.py 97): INFO Epoch: 29400, loss: 0.3178, sPCE bound: 7.293224863422845
+[2026-04-27 17:00:20](location_finding.py 97): INFO Epoch: 29450, loss: 0.3235, sPCE bound: 7.26252537192199
+[2026-04-27 17:00:24](location_finding.py 97): INFO Epoch: 29500, loss: 0.3450, sPCE bound: 7.228993557108376
+[2026-04-27 17:00:24](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 17:00:28](location_finding.py 97): INFO Epoch: 29550, loss: 0.3386, sPCE bound: 7.274834297312234
+[2026-04-27 17:00:31](location_finding.py 97): INFO Epoch: 29600, loss: 0.3182, sPCE bound: 7.2439085167774895
+[2026-04-27 17:00:35](location_finding.py 97): INFO Epoch: 29650, loss: 0.2993, sPCE bound: 7.291524283302758
+[2026-04-27 17:00:39](location_finding.py 97): INFO Epoch: 29700, loss: 0.3219, sPCE bound: 7.2880334776768425
+[2026-04-27 17:00:43](location_finding.py 97): INFO Epoch: 29750, loss: 0.2812, sPCE bound: 7.292176060093377
+[2026-04-27 17:00:46](location_finding.py 97): INFO Epoch: 29800, loss: 0.2741, sPCE bound: 7.335334859503243
+[2026-04-27 17:00:50](location_finding.py 97): INFO Epoch: 29850, loss: 0.2696, sPCE bound: 7.265959672344659
+[2026-04-27 17:00:54](location_finding.py 97): INFO Epoch: 29900, loss: 0.3291, sPCE bound: 7.290906332148049
+[2026-04-27 17:00:58](location_finding.py 97): INFO Epoch: 29950, loss: 0.3164, sPCE bound: 7.286707959784005
+[2026-04-27 17:01:01](location_finding.py 97): INFO Epoch: 30000, loss: 0.3250, sPCE bound: 7.300870977056954
+[2026-04-27 17:01:01](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 17:01:05](location_finding.py 97): INFO Epoch: 30050, loss: 0.3631, sPCE bound: 7.2545145374665
+[2026-04-27 17:01:09](location_finding.py 97): INFO Epoch: 30100, loss: 0.3182, sPCE bound: 7.292879841936562
+[2026-04-27 17:01:12](location_finding.py 97): INFO Epoch: 30150, loss: 0.3082, sPCE bound: 7.295533232105706
+[2026-04-27 17:01:16](location_finding.py 97): INFO Epoch: 30200, loss: 0.3106, sPCE bound: 7.272543273581002
+[2026-04-27 17:01:20](location_finding.py 97): INFO Epoch: 30250, loss: 0.3580, sPCE bound: 7.259018264425729
+[2026-04-27 17:01:24](location_finding.py 97): INFO Epoch: 30300, loss: 0.3146, sPCE bound: 7.278562389029
+[2026-04-27 17:01:27](location_finding.py 97): INFO Epoch: 30350, loss: 0.3164, sPCE bound: 7.273520759952996
+[2026-04-27 17:01:31](location_finding.py 97): INFO Epoch: 30400, loss: 0.3401, sPCE bound: 7.2893040698895195
+[2026-04-27 17:01:35](location_finding.py 97): INFO Epoch: 30450, loss: 0.3623, sPCE bound: 7.26250090421531
+[2026-04-27 17:01:39](location_finding.py 97): INFO Epoch: 30500, loss: 0.3183, sPCE bound: 7.260234527004693
+[2026-04-27 17:01:39](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 17:01:42](location_finding.py 97): INFO Epoch: 30550, loss: 0.3399, sPCE bound: 7.259066365374062
+[2026-04-27 17:01:46](location_finding.py 97): INFO Epoch: 30600, loss: 0.3279, sPCE bound: 7.264869741810296
+[2026-04-27 17:01:50](location_finding.py 97): INFO Epoch: 30650, loss: 0.3353, sPCE bound: 7.254324905289147
+[2026-04-27 17:01:54](location_finding.py 97): INFO Epoch: 30700, loss: 0.3137, sPCE bound: 7.272271625412438
+[2026-04-27 17:01:57](location_finding.py 97): INFO Epoch: 30750, loss: 0.2902, sPCE bound: 7.2864238840470055
+[2026-04-27 17:02:01](location_finding.py 97): INFO Epoch: 30800, loss: 0.3244, sPCE bound: 7.3072746914753655
+[2026-04-27 17:02:05](location_finding.py 97): INFO Epoch: 30850, loss: 0.3165, sPCE bound: 7.274663798225854
+[2026-04-27 17:02:08](location_finding.py 97): INFO Epoch: 30900, loss: 0.2981, sPCE bound: 7.26738034905288
+[2026-04-27 17:02:12](location_finding.py 97): INFO Epoch: 30950, loss: 0.3302, sPCE bound: 7.29770084441993
+[2026-04-27 17:02:16](location_finding.py 97): INFO Epoch: 31000, loss: 0.3118, sPCE bound: 7.282234124554131
+[2026-04-27 17:02:16](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 17:02:19](location_finding.py 97): INFO Epoch: 31050, loss: 0.2917, sPCE bound: 7.286177687061761
+[2026-04-27 17:02:23](location_finding.py 97): INFO Epoch: 31100, loss: 0.2621, sPCE bound: 7.264053754223321
+[2026-04-27 17:02:27](location_finding.py 97): INFO Epoch: 31150, loss: 0.3110, sPCE bound: 7.262351385963891
+[2026-04-27 17:02:31](location_finding.py 97): INFO Epoch: 31200, loss: 0.3193, sPCE bound: 7.282372079504464
+[2026-04-27 17:02:34](location_finding.py 97): INFO Epoch: 31250, loss: 0.3155, sPCE bound: 7.303866646898721
+[2026-04-27 17:02:38](location_finding.py 97): INFO Epoch: 31300, loss: 0.3550, sPCE bound: 7.3076878708729485
+[2026-04-27 17:02:42](location_finding.py 97): INFO Epoch: 31350, loss: 0.3538, sPCE bound: 7.268770090950463
+[2026-04-27 17:02:46](location_finding.py 97): INFO Epoch: 31400, loss: 0.2909, sPCE bound: 7.2645786029228905
+[2026-04-27 17:02:49](location_finding.py 97): INFO Epoch: 31450, loss: 0.3138, sPCE bound: 7.289645842922662
+[2026-04-27 17:02:53](location_finding.py 97): INFO Epoch: 31500, loss: 0.3846, sPCE bound: 7.2407981079945305
+[2026-04-27 17:02:53](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 17:02:57](location_finding.py 97): INFO Epoch: 31550, loss: 0.3262, sPCE bound: 7.283908627642129
+[2026-04-27 17:03:01](location_finding.py 97): INFO Epoch: 31600, loss: 0.3242, sPCE bound: 7.278051666630242
+[2026-04-27 17:03:04](location_finding.py 97): INFO Epoch: 31650, loss: 0.3292, sPCE bound: 7.276530526293252
+[2026-04-27 17:03:08](location_finding.py 97): INFO Epoch: 31700, loss: 0.3225, sPCE bound: 7.3232397657761314
+[2026-04-27 17:03:12](location_finding.py 97): INFO Epoch: 31750, loss: 0.3630, sPCE bound: 7.278590164793465
+[2026-04-27 17:03:16](location_finding.py 97): INFO Epoch: 31800, loss: 0.3637, sPCE bound: 7.274634979380105
+[2026-04-27 17:03:19](location_finding.py 97): INFO Epoch: 31850, loss: 0.3100, sPCE bound: 7.3034128767380455
+[2026-04-27 17:03:23](location_finding.py 97): INFO Epoch: 31900, loss: 0.3619, sPCE bound: 7.28768309177253
+[2026-04-27 17:03:27](location_finding.py 97): INFO Epoch: 31950, loss: 0.3102, sPCE bound: 7.288488976372216
+[2026-04-27 17:03:31](location_finding.py 97): INFO Epoch: 32000, loss: 0.3284, sPCE bound: 7.275830737961266
+[2026-04-27 17:03:31](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 17:03:34](location_finding.py 97): INFO Epoch: 32050, loss: 0.3225, sPCE bound: 7.293348394049142
+[2026-04-27 17:03:38](location_finding.py 97): INFO Epoch: 32100, loss: 0.3431, sPCE bound: 7.259896777285073
+[2026-04-27 17:03:42](location_finding.py 97): INFO Epoch: 32150, loss: 0.2972, sPCE bound: 7.263820402039025
+[2026-04-27 17:03:46](location_finding.py 97): INFO Epoch: 32200, loss: 0.3170, sPCE bound: 7.291006587160561
+[2026-04-27 17:03:49](location_finding.py 97): INFO Epoch: 32250, loss: 0.3092, sPCE bound: 7.280014864815209
+[2026-04-27 17:03:53](location_finding.py 97): INFO Epoch: 32300, loss: 0.3117, sPCE bound: 7.277964107407067
+[2026-04-27 17:03:57](location_finding.py 97): INFO Epoch: 32350, loss: 0.3182, sPCE bound: 7.266341231478188
+[2026-04-27 17:04:01](location_finding.py 97): INFO Epoch: 32400, loss: 0.3347, sPCE bound: 7.262898109568093
+[2026-04-27 17:04:04](location_finding.py 97): INFO Epoch: 32450, loss: 0.3039, sPCE bound: 7.307419649971459
+[2026-04-27 17:04:08](location_finding.py 97): INFO Epoch: 32500, loss: 0.3261, sPCE bound: 7.30635335267875
+[2026-04-27 17:04:08](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 17:04:12](location_finding.py 97): INFO Epoch: 32550, loss: 0.2928, sPCE bound: 7.274776152981255
+[2026-04-27 17:04:15](location_finding.py 97): INFO Epoch: 32600, loss: 0.2969, sPCE bound: 7.2703036886582115
+[2026-04-27 17:04:19](location_finding.py 97): INFO Epoch: 32650, loss: 0.3019, sPCE bound: 7.290199540270303
+[2026-04-27 17:04:23](location_finding.py 97): INFO Epoch: 32700, loss: 0.2951, sPCE bound: 7.310758046520684
+[2026-04-27 17:04:27](location_finding.py 97): INFO Epoch: 32750, loss: 0.3488, sPCE bound: 7.2514313680062035
+[2026-04-27 17:04:30](location_finding.py 97): INFO Epoch: 32800, loss: 0.3153, sPCE bound: 7.2974013012776116
+[2026-04-27 17:04:34](location_finding.py 97): INFO Epoch: 32850, loss: 0.3090, sPCE bound: 7.293017379654382
+[2026-04-27 17:04:38](location_finding.py 97): INFO Epoch: 32900, loss: 0.3128, sPCE bound: 7.295301608456109
+[2026-04-27 17:04:42](location_finding.py 97): INFO Epoch: 32950, loss: 0.3437, sPCE bound: 7.285646699083779
+[2026-04-27 17:04:45](location_finding.py 97): INFO Epoch: 33000, loss: 0.3049, sPCE bound: 7.244011960638497
+[2026-04-27 17:04:45](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 17:04:49](location_finding.py 97): INFO Epoch: 33050, loss: 0.2981, sPCE bound: 7.276534072769616
+[2026-04-27 17:04:53](location_finding.py 97): INFO Epoch: 33100, loss: 0.3102, sPCE bound: 7.250310115231011
+[2026-04-27 17:04:57](location_finding.py 97): INFO Epoch: 33150, loss: 0.3313, sPCE bound: 7.3045003634819725
+[2026-04-27 17:05:00](location_finding.py 97): INFO Epoch: 33200, loss: 0.3726, sPCE bound: 7.242248289001916
+[2026-04-27 17:05:04](location_finding.py 97): INFO Epoch: 33250, loss: 0.2902, sPCE bound: 7.285759769094918
+[2026-04-27 17:05:08](location_finding.py 97): INFO Epoch: 33300, loss: 0.3087, sPCE bound: 7.289744697226022
+[2026-04-27 17:05:12](location_finding.py 97): INFO Epoch: 33350, loss: 0.3354, sPCE bound: 7.267618797434304
+[2026-04-27 17:05:15](location_finding.py 97): INFO Epoch: 33400, loss: 0.3173, sPCE bound: 7.307593963755105
+[2026-04-27 17:05:19](location_finding.py 97): INFO Epoch: 33450, loss: 0.2936, sPCE bound: 7.305695138586495
+[2026-04-27 17:05:23](location_finding.py 97): INFO Epoch: 33500, loss: 0.3232, sPCE bound: 7.2674055916199425
+[2026-04-27 17:05:23](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 17:05:27](location_finding.py 97): INFO Epoch: 33550, loss: 0.3180, sPCE bound: 7.29738979758117
+[2026-04-27 17:05:30](location_finding.py 97): INFO Epoch: 33600, loss: 0.3236, sPCE bound: 7.271813355101083
+[2026-04-27 17:05:34](location_finding.py 97): INFO Epoch: 33650, loss: 0.3117, sPCE bound: 7.309945665014718
+[2026-04-27 17:05:38](location_finding.py 97): INFO Epoch: 33700, loss: 0.2854, sPCE bound: 7.288178555382226
+[2026-04-27 17:05:41](location_finding.py 97): INFO Epoch: 33750, loss: 0.3376, sPCE bound: 7.269565932167504
+[2026-04-27 17:05:45](location_finding.py 97): INFO Epoch: 33800, loss: 0.3067, sPCE bound: 7.287365041388009
+[2026-04-27 17:05:49](location_finding.py 97): INFO Epoch: 33850, loss: 0.2990, sPCE bound: 7.269288234127496
+[2026-04-27 17:05:53](location_finding.py 97): INFO Epoch: 33900, loss: 0.3116, sPCE bound: 7.269022278202508
+[2026-04-27 17:05:56](location_finding.py 97): INFO Epoch: 33950, loss: 0.3213, sPCE bound: 7.287067554605935
+[2026-04-27 17:06:00](location_finding.py 97): INFO Epoch: 34000, loss: 0.3267, sPCE bound: 7.303490213764642
+[2026-04-27 17:06:00](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 17:06:04](location_finding.py 97): INFO Epoch: 34050, loss: 0.3221, sPCE bound: 7.28232198180053
+[2026-04-27 17:06:08](location_finding.py 97): INFO Epoch: 34100, loss: 0.3387, sPCE bound: 7.259376816166375
+[2026-04-27 17:06:11](location_finding.py 97): INFO Epoch: 34150, loss: 0.2988, sPCE bound: 7.293771736038659
+[2026-04-27 17:06:15](location_finding.py 97): INFO Epoch: 34200, loss: 0.3124, sPCE bound: 7.282164387119744
+[2026-04-27 17:06:19](location_finding.py 97): INFO Epoch: 34250, loss: 0.3108, sPCE bound: 7.289299867762063
+[2026-04-27 17:06:23](location_finding.py 97): INFO Epoch: 34300, loss: 0.2841, sPCE bound: 7.2854729217419365
+[2026-04-27 17:06:26](location_finding.py 97): INFO Epoch: 34350, loss: 0.3243, sPCE bound: 7.304035566462014
+[2026-04-27 17:06:30](location_finding.py 97): INFO Epoch: 34400, loss: 0.3437, sPCE bound: 7.2681526166329125
+[2026-04-27 17:06:34](location_finding.py 97): INFO Epoch: 34450, loss: 0.3500, sPCE bound: 7.280060760391686
+[2026-04-27 17:06:37](location_finding.py 97): INFO Epoch: 34500, loss: 0.3388, sPCE bound: 7.263745240581963
+[2026-04-27 17:06:37](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 17:06:41](location_finding.py 97): INFO Epoch: 34550, loss: 0.3221, sPCE bound: 7.2991157394776085
+[2026-04-27 17:06:45](location_finding.py 97): INFO Epoch: 34600, loss: 0.3542, sPCE bound: 7.278395048988793
+[2026-04-27 17:06:49](location_finding.py 97): INFO Epoch: 34650, loss: 0.3300, sPCE bound: 7.302942894113992
+[2026-04-27 17:06:52](location_finding.py 97): INFO Epoch: 34700, loss: 0.3191, sPCE bound: 7.300600401771996
+[2026-04-27 17:06:56](location_finding.py 97): INFO Epoch: 34750, loss: 0.3309, sPCE bound: 7.294725082529519
+[2026-04-27 17:07:00](location_finding.py 97): INFO Epoch: 34800, loss: 0.2900, sPCE bound: 7.280271820438836
+[2026-04-27 17:07:04](location_finding.py 97): INFO Epoch: 34850, loss: 0.2964, sPCE bound: 7.245198391092751
+[2026-04-27 17:07:07](location_finding.py 97): INFO Epoch: 34900, loss: 0.3212, sPCE bound: 7.294817827356789
+[2026-04-27 17:07:11](location_finding.py 97): INFO Epoch: 34950, loss: 0.2874, sPCE bound: 7.290192059887383
+[2026-04-27 17:07:15](location_finding.py 97): INFO Epoch: 35000, loss: 0.3044, sPCE bound: 7.314453594101403
+[2026-04-27 17:07:15](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 17:07:18](location_finding.py 97): INFO Epoch: 35050, loss: 0.3117, sPCE bound: 7.291250638378594
+[2026-04-27 17:07:22](location_finding.py 97): INFO Epoch: 35100, loss: 0.3125, sPCE bound: 7.273041449202035
+[2026-04-27 17:07:26](location_finding.py 97): INFO Epoch: 35150, loss: 0.3293, sPCE bound: 7.29649137677047
+[2026-04-27 17:07:30](location_finding.py 97): INFO Epoch: 35200, loss: 0.3062, sPCE bound: 7.2969818931946495
+[2026-04-27 17:07:33](location_finding.py 97): INFO Epoch: 35250, loss: 0.2914, sPCE bound: 7.273454121960137
+[2026-04-27 17:07:37](location_finding.py 97): INFO Epoch: 35300, loss: 0.2639, sPCE bound: 7.304026357544396
+[2026-04-27 17:07:41](location_finding.py 97): INFO Epoch: 35350, loss: 0.3115, sPCE bound: 7.2607823532948235
+[2026-04-27 17:07:44](location_finding.py 97): INFO Epoch: 35400, loss: 0.2950, sPCE bound: 7.293277613533471
+[2026-04-27 17:07:48](location_finding.py 97): INFO Epoch: 35450, loss: 0.2996, sPCE bound: 7.29276099027488
+[2026-04-27 17:07:52](location_finding.py 97): INFO Epoch: 35500, loss: 0.3544, sPCE bound: 7.288094035995934
+[2026-04-27 17:07:52](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 17:07:56](location_finding.py 97): INFO Epoch: 35550, loss: 0.3253, sPCE bound: 7.269400410068963
+[2026-04-27 17:07:59](location_finding.py 97): INFO Epoch: 35600, loss: 0.2889, sPCE bound: 7.316156856430505
+[2026-04-27 17:08:03](location_finding.py 97): INFO Epoch: 35650, loss: 0.3337, sPCE bound: 7.235309622896645
+[2026-04-27 17:08:07](location_finding.py 97): INFO Epoch: 35700, loss: 0.3244, sPCE bound: 7.297656111134026
+[2026-04-27 17:08:11](location_finding.py 97): INFO Epoch: 35750, loss: 0.3062, sPCE bound: 7.264693639887307
+[2026-04-27 17:08:14](location_finding.py 97): INFO Epoch: 35800, loss: 0.3104, sPCE bound: 7.267419211281274
+[2026-04-27 17:08:18](location_finding.py 97): INFO Epoch: 35850, loss: 0.3158, sPCE bound: 7.265569023502801
+[2026-04-27 17:08:22](location_finding.py 97): INFO Epoch: 35900, loss: 0.3189, sPCE bound: 7.263637654198144
+[2026-04-27 17:08:25](location_finding.py 97): INFO Epoch: 35950, loss: 0.2777, sPCE bound: 7.328174076689217
+[2026-04-27 17:08:29](location_finding.py 97): INFO Epoch: 36000, loss: 0.2964, sPCE bound: 7.292082898033593
+[2026-04-27 17:08:29](location_finding.py 102): INFO Checkpoint has been saved at /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-27/16-23-10/ckpt.tar
+[2026-04-27 17:08:33](location_finding.py 97): INFO Epoch: 36050, loss: 0.2916, sPCE bound: 7.256574533594582
+[2026-04-27 17:08:36](location_finding.py 97): INFO Epoch: 36100, loss: 0.3238, sPCE bound: 7.303122006071542
+[2026-04-27 17:08:40](location_finding.py 97): INFO Epoch: 36150, loss: 0.2921, sPCE bound: 7.314789496077035
+[2026-04-27 17:08:44](location_finding.py 97): INFO Epoch: 36200, loss: 0.3179, sPCE bound: 7.30842193187568
+[2026-04-27 17:08:48](location_finding.py 97): INFO Epoch: 36250, loss: 0.2956, sPCE bound: 7.262743495119546
+[2026-04-27 17:08:51](location_finding.py 97): INFO Epoch: 36300, loss: 0.3180, sPCE bound: 7.3157096129784325
+[2026-04-27 17:08:55](location_finding.py 97): INFO Epoch: 36350, loss: 0.3252, sPCE bound: 7.283506594313119
+slurmstepd: error: *** JOB 17871908 ON nid005034 CANCELLED AT 2026-04-27T17:08:57 ***

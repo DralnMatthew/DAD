@@ -1,0 +1,90 @@
+-------------------------------------------------------------------------------
+There are messages associated with the following module(s):
+-------------------------------------------------------------------------------
+
+PyTorch/2.7.1-rocm-6.2.4-python-3.12-singularity-20250827:
+   Though this container is based on a version of ROCm that is officially
+   supported by the ROCm driver on the system, we cannot exclude that there
+   will be problems when, e.g., the container integrates with the Cray PE as
+   it may be trying to link to libraries that were meant to be used with a
+   different version of ROCm. In particular, we expect that mpi4py may
+   produce warnings.
+
+-------------------------------------------------------------------------------[2026-04-26 13:17:12](ces.py 453): INFO Running with config:
+{'max_epoch': 2000, 'batch_size': 500, 'eval_size': 100, 'L': 99999, 'M': 500, 'T': 10, 'lr': 5e-05, 'loss': 'PCELoss', 'seed': 123, 'fix_seed': True, 'clip_grads': True, 'verbose': 50, 'device': 'cuda', 'output_dir': '/pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-26/13-17-08', 'checkpoint': 500, 'checkpoint_name': 'ckpt.tar', 'file_name': 'ces.pth', 'eval_batch_size': 1, 'eval_L': 10000000, 'eval_M': 1000, 'eval_T': 10, 'eval_heavy_every': 0, 'heavy_eval_likelihood_eval_milestones': [100000, 1000000, 10000000], 'save_milestone_checkpoints': True, 'save_milestone_eval_bounds': True, 'checkpoint_path': None, 'use_checkpoint_config': True, 'eval_output_prefix': 'checkpoint_eval', 'benchmark_mode': 'heavy_eval', 'deployment_benchmark_T': 10, 'deployment_benchmark_warmup_episodes': 20, 'deployment_benchmark_episodes': 100, 'deployment_benchmark_batch_size': 1, 'deployment_benchmark_metrics_filename': 'metrics.json', 'wandb': {'group': '${data.name}', 'project': 'DAD', 'use_wandb': True, 'run_name': '${data.name}-${data.dim_design}D-${now:%Y-%m-%d_%H-%M}', 'tag': 'mlp'}, 'data': {'name': 'CES', 'dim_design': 6, 'dim_outcome': 1, 'design_scale': 100, 'outcome_scale': 1, 'noise_scale': 0.005, 'epsilon': 2.384185791015625e-07}, 'model': {'name': 'MLP', 'embed_dim': 32, 'encoding_dim': 32, 'hidden_dim': 128, 'encoder_hidden_depth': 1, 'emitter_hidden_depth': 1, 'encoder_normalization': True}}
+wandb: Currently logged in as: zhanghu-zhao (zhanghu_zhao) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: creating run
+wandb: Tracking run with wandb version 0.21.1
+wandb: Run data is saved locally in /pfs/lustrep3/scratch/project_462001370/DAD/outputs/hydra/2026-04-26/13-17-08/wandb/run-20260426_131712-gslgjitb
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run CES-6D-2026-04-26_13-17
+wandb: ⭐️ View project at https://wandb.ai/zhanghu_zhao/DAD
+wandb: 🚀 View run at https://wandb.ai/zhanghu_zhao/DAD/runs/gslgjitb
+wandb: WARNING Saving files without folders. If you want to preserve subdirectories pass base_path to wandb.save, i.e. wandb.save("/mnt/folder/file.h5", base_path="/mnt")
+[2026-04-26 13:17:16](ces.py 478): INFO SetEquivariantDesignNetwork(
+  (encoder): EncoderNetworkV2(
+    (embed_design): Sequential(
+      (0): Linear(in_features=6, out_features=32, bias=True)
+      (1): ReLU()
+      (2): LayerNorm((32,), eps=1e-05, elementwise_affine=True)
+    )
+    (embed_observation): Sequential(
+      (0): Linear(in_features=1, out_features=32, bias=True)
+      (1): ReLU()
+      (2): LayerNorm((32,), eps=1e-05, elementwise_affine=True)
+    )
+    (hidden_layers): Sequential(
+      (0): Linear(in_features=64, out_features=128, bias=True)
+      (1): ReLU()
+      (2): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+    )
+    (output_layer): Linear(in_features=128, out_features=32, bias=True)
+  )
+  (emitter): EmitterNetwork(
+    (hidden_layers): Sequential(
+      (0): Linear(in_features=32, out_features=128, bias=True)
+      (1): ReLU()
+    )
+    (output_layer): Linear(in_features=128, out_features=6, bias=True)
+    (output_norm): Identity()
+  )
+)
+[2026-04-26 13:17:16](ces.py 486): INFO CES(training=True, design_scale=100, outcome_scale=1, theta_prior=Normal(loc: 0.0, scale: 1.0), dim_design=6, dim_outcome=1, basket_dim=3, noise_scale=0.005, epsilon=2.384185791015625e-07, use_initial_context=False, rho_a=1.0, rho_b=1.0, rho_prior=Beta(), alpha_concentration=tensor([1., 1., 1.], device='cuda:0'), alpha_prior=Dirichlet(concentration: torch.Size([3])), u_mu=1.0, u_sigma=3.0, log_u_prior=Normal(loc: 1.0, scale: 3.0))
+Error executing job with overrides: ['wandb.use_wandb=True', 'eval_batch_size=1']
+Traceback (most recent call last):
+  File "/pfs/lustrep3/scratch/project_462001370/DAD/ces.py", line 490, in main
+    train_artifacts = train(cfg, logger, model, experiment, cfg.batch_size, cfg.L, cfg.M, cfg.T, cfg.max_epoch, verbose=cfg.verbose)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/pfs/lustrep3/scratch/project_462001370/DAD/ces.py", line 290, in train
+    batch_loss = criterion(y_outcomes, experiment.to_design_space(xi_designs), thetas) / max_step
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/miniconda3/envs/pytorch/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/miniconda3/envs/pytorch/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/pfs/lustrep3/scratch/project_462001370/DAD/loss/eig.py", line 81, in forward
+    log_probs = self.compute_seq_logprobs(y_outcomes, xi_designs, thetas)   # [L, B]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/pfs/lustrep3/scratch/project_462001370/DAD/loss/eig.py", line 44, in compute_seq_logprobs
+    log_probs = self.log_prob(y_outcomes, xi_designs, thetas)               # [L, B, T, 1]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/pfs/lustrep3/scratch/project_462001370/DAD/data/ces.py", line 204, in log_likelihood
+    log_prob = CensoredSigmoidNormal(mu_eta, sigma_eta, self.epsilon, 1-self.epsilon).log_prob(y)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/pfs/lustrep3/scratch/project_462001370/DAD/data/extra_dist.py", line 152, in log_prob
+    z_upper = self.z(upper_lim)
+              ^^^^^^^^^^^^^^^^^
+  File "/pfs/lustrep3/scratch/project_462001370/DAD/data/extra_dist.py", line 119, in z
+    return (self.transform.inv(value) - self.loc) / self.scale
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~
+  File "/opt/miniconda3/envs/pytorch/lib/python3.12/site-packages/torch/utils/_device.py", line 104, in __torch_function__
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+torch.OutOfMemoryError: HIP out of memory. Tried to allocate 1.86 GiB. GPU 0 has a total capacity of 63.98 GiB of which 722.00 MiB is free. Of the allocated memory 61.55 GiB is allocated by PyTorch, and 643.41 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_HIP_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+[1;34mwandb[0m: 
+[1;34mwandb[0m: 🚀 View run [33mCES-6D-2026-04-26_13-17[0m at: [34mhttps://wandb.ai/zhanghu_zhao/DAD/runs/gslgjitb[0m
+[1;34mwandb[0m: Find logs at: [1;35moutputs/hydra/2026-04-26/13-17-08/wandb/run-20260426_131712-gslgjitb/logs[0m
