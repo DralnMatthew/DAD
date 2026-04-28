@@ -1,25 +1,37 @@
 #!/bin/bash -l
-#SBATCH --job-name=eval
-#SBATCH --output=out/%x_%j_%a.txt
-#SBATCH --partition=small-g
+
+#SBATCH --time=100:00:00
+#SBATCH --mem=50G
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=1
-#SBATCH --gpus-per-node=1
-#SBATCH --mem=64G
-#SBATCH --time=40:00:00
-#SBATCH --account=project_462001370
+#SBATCH --output=out/%x_%j_%a.txt
+#SBATCH --job-name=eval
+#SBATCH --array=1
+#SBATCH --gpus=1
+#SBATCH --partition=gpu-h100-80g
+#SBATCH --mail-type=END
+#SBATCH --mail-user=zhanghu.zhao@aalto.fi
 
-export EBU_USER_PREFIX=/scratch/project_462001370/Informed-BED/env2/EasyBuild
+cd /scratch/work/zhaoz5/DAD
 
-export WANDB_API_KEY=$(cat ~/.wandb_secret)
+mkdir -p models out/eval
 
-module --force purge
+run_eval () {
+    local task=$1 ckpt=$2 script=$3
+    if [[ ! -f "${ckpt}" ]]; then
+        echo "[eval] SKIP ${task}: missing ${ckpt} (stage it from outputs/hydra/...)"
+        return
+    fi
+    echo "[eval] >>> ${task}: ${script} --model_path ${ckpt}"
+    python "${script}" --model_path "${ckpt}"
+    echo "[eval] <<< ${task} done"
+}
 
-module use $EBU_USER_PREFIX/modules/container
+run_eval "location_finding" "models/loc.pth" "eval_pce_per_step.py"
+run_eval "ces"               "models/ces.pth" "eval_pce_context_ces.py"
 
-module load PyTorch/2.7.1-rocm-6.2.4-python-3.12-singularity-20250827
-
-cd /scratch/project_462001370/DAD
-
-# python eval_pce_per_step.py --model_path /scratch/project_462001370/DAD/outputs/hydra/2026-04-27/17-17-55/model/loc.pth
-python eval_pce_context_ces.py --model_path /scratch/project_462001370/DAD/outputs/hydra/2026-04-27/17-10-47/model/ces.pth
+echo
+echo "================================================================"
+echo "[eval] All tasks done. Results in:"
+echo "  out/eval/loc_pce_per_step.{pt,txt}"
+echo "  out/eval/ces_pce_context.{pt,txt}"
+echo "================================================================"

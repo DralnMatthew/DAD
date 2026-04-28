@@ -1,4 +1,13 @@
-""" Evaluate sPCE bounds at every step of the location finding task and save to .pt """
+""" Evaluate per-step sPCE / sNMC bounds for the Location Finding task.
+
+Defaults assume the trained checkpoint lives at ``./models/loc.pth`` (drop the
+``.pth`` from training there). Outputs go to ``./out/eval/``:
+    - loc_pce_per_step.pt   easy-to-read flat dict (see ``payload`` below)
+    - loc_pce_per_step.txt  human-readable per-step table
+
+The model was trained with T=20 but per-step bounds are evaluated up to T=30
+by default to inspect extrapolation behaviour.
+"""
 import argparse
 import os
 import torch
@@ -7,7 +16,25 @@ from omegaconf import OmegaConf
 
 from data import HiddenLocation
 from model.mlp import EncoderNetwork, EmitterNetwork, SetEquivariantDesignNetwork
+from utils import create_logger, set_seed
 from utils.eval import eval_bounds
+
+
+REPO_ROOT = os.path.dirname(os.path.abspath(__file__))
+DEFAULT_MODEL_PATH = os.path.join(REPO_ROOT, "models", "loc.pth")
+DEFAULT_OUTPUT_DIR = os.path.join(REPO_ROOT, "out", "eval")
+
+
+def load_cfg(config_path: str = None):
+    """Compose the location-finding config from ``./config`` defaults."""
+    if config_path is not None and os.path.isfile(config_path):
+        return OmegaConf.load(config_path)
+    cfg = OmegaConf.merge(
+        OmegaConf.load(os.path.join(REPO_ROOT, "config", "loc.yaml")),
+        {"data": OmegaConf.load(os.path.join(REPO_ROOT, "config", "data", "location.yaml"))},
+        {"model": OmegaConf.load(os.path.join(REPO_ROOT, "config", "model", "mlp_loc.yaml"))},
+    )
+    return cfg
 
 
 def build_model(cfg):
@@ -37,42 +64,52 @@ def build_experiment(cfg):
     )
 
 
+def write_table(path, header_lines, T, pce_mean, pce_se, nmc_mean, nmc_se):
+    with open(path, "w") as f:
+        for line in header_lines:
+            f.write(f"# {line}\n")
+        f.write(f"{'step':>4}  {'pce_mean':>10}  {'pce_se':>10}  {'nmc_mean':>10}  {'nmc_se':>10}\n")
+        for t in range(T):
+            f.write(
+                f"{t+1:>4}  {pce_mean[t].item():>10.4f}  {pce_se[t].item():>10.4f}  "
+                f"{nmc_mean[t].item():>10.4f}  {nmc_se[t].item():>10.4f}\n"
+            )
+
+
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model_path", type=str, required=True,
-                        help="Path to trained model state dict, e.g. outputs/.../model/loc.pth")
+    parser.add_argument("--model_path", type=str, default=DEFAULT_MODEL_PATH,
+                        help="Trained model state dict (default: ./models/loc.pth)")
     parser.add_argument("--config_path", type=str, default=None,
-                        help="Path to .hydra/config.yaml. Default: <run_dir>/.hydra/config.yaml")
-    parser.add_argument("--output_path", type=str, default=None,
-                        help="Where to save the per-step bounds .pt file. Default: <run_dir>/eval/loc_pce_per_step.pt")
-    parser.add_argument("--T", type=int, default=None, help="Override eval_T")
-    parser.add_argument("--L", type=int, default=None, help="Override eval_L")
-    parser.add_argument("--M", type=int, default=None, help="Override eval_M")
+                        help="Optional override config; default composes ./config/loc.yaml")
+    parser.add_argument("--output_dir", type=str, default=DEFAULT_OUTPUT_DIR,
+                        help="Directory to write loc_pce_per_step.{pt,txt}")
+    parser.add_argument("--T", type=int, default=30, help="Per-step eval horizon (default 30)")
+    parser.add_argument("--L", type=int, default=None, help="Override eval_L from config")
+    parser.add_argument("--M", type=int, default=None, help="Override eval_M from config")
     parser.add_argument("--batch_size", type=int, default=None, help="Override eval_batch_size")
     parser.add_argument("--device", type=str, default=None, help="cpu / cuda")
+    parser.add_argument("--seed", type=int, default=123, help="Random seed")
     args = parser.parse_args()
 
-    # Resolve run dir = parent of "model/" directory containing the checkpoint
-    run_dir = os.path.dirname(os.path.dirname(os.path.abspath(args.model_path)))
-    config_path = args.config_path or os.path.join(run_dir, ".hydra", "config.yaml")
-    if not os.path.isfile(config_path):
-        raise FileNotFoundError(f"Config not found at {config_path}. Pass --config_path explicitly.")
+    cfg = load_cfg(args.config_path)
 
-    cfg = OmegaConf.load(config_path)
-
-    # Device
     device = args.device or cfg.get("device", "cpu")
     if device == "cuda" and not torch.cuda.is_available():
         device = "cpu"
     torch.set_default_device(device)
 
-    # Eval overrides
-    T = args.T if args.T is not None else cfg.eval_T
+    set_seed(args.seed)
+
+    T = args.T
     L = args.L if args.L is not None else cfg.eval_L
     M = args.M if args.M is not None else cfg.eval_M
     batch_size = args.batch_size if args.batch_size is not None else cfg.eval_batch_size
 
-    # Build model and experiment
+    os.makedirs(args.output_dir, exist_ok=True)
+    log_dir = os.path.join(args.output_dir, "logs")
+    logger = create_logger(log_dir, name="loc_pce")
+
     model = build_model(cfg)
     state_dict = torch.load(args.model_path, map_location=device, weights_only=True)
     model.load_state_dict(state_dict)
@@ -80,32 +117,47 @@ def main():
 
     experiment = build_experiment(cfg)
 
-    print(f"Loaded model from {args.model_path}")
-    print(f"Running stepwise evaluation: T={T}, L={L}, M={M}, batch_size={batch_size}, device={device}")
+    logger.info(f"Loaded model from {os.path.abspath(args.model_path)}")
+    logger.info(f"Eval: T={T}, L={L}, M={M}, batch_size={batch_size}, device={device}, seed={args.seed}")
 
     bounds = eval_bounds(cfg, model, experiment, T=T, L=L, M=M, batch_size=batch_size, stepwise=True)
 
-    # Print per-step PCE
-    print("\nStep |     sPCE (mean ± s.e.)    |     sNMC (mean ± s.e.)")
-    print("-" * 60)
+    logger.info("Step |     sPCE (mean +/- s.e.)    |     sNMC (mean +/- s.e.)")
+    logger.info("-" * 60)
     for t in range(T):
-        print(f"{t+1:>4} | {bounds.pce_mean[t].item():>9.4f} ± {bounds.pce_se[t].item():.4f} "
-              f" | {bounds.nmc_mean[t].item():>9.4f} ± {bounds.nmc_se[t].item():.4f}")
+        logger.info(
+            f"{t+1:>4} | {bounds.pce_mean[t].item():>9.4f} +/- {bounds.pce_se[t].item():.4f} "
+            f" | {bounds.nmc_mean[t].item():>9.4f} +/- {bounds.nmc_se[t].item():.4f}"
+        )
 
-    # Save
-    output_path = args.output_path or os.path.join(run_dir, "eval", "loc_pce_per_step.pt")
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    pt_path = os.path.join(args.output_dir, "loc_pce_per_step.pt")
+    txt_path = os.path.join(args.output_dir, "loc_pce_per_step.txt")
 
     payload = {
-        "pce_mean": bounds.pce_mean,
-        "pce_se": bounds.pce_se,
-        "nmc_mean": bounds.nmc_mean,
-        "nmc_se": bounds.nmc_se,
+        "task": "location_finding",
         "T": T, "L": L, "M": M, "batch_size": batch_size,
+        "seed": args.seed,
         "model_path": os.path.abspath(args.model_path),
+        "device": device,
+        "step": torch.arange(1, T + 1),
+        "pce_mean": bounds.pce_mean.cpu(),
+        "pce_se": bounds.pce_se.cpu(),
+        "nmc_mean": bounds.nmc_mean.cpu(),
+        "nmc_se": bounds.nmc_se.cpu(),
+        "config": OmegaConf.to_container(cfg, resolve=True),
     }
-    torch.save(payload, output_path)
-    print(f"\nSaved per-step bounds to {output_path}")
+    torch.save(payload, pt_path)
+
+    header_lines = [
+        "Location finding per-step sPCE / sNMC bounds",
+        f"T={T}  L={L}  M={M}  batch_size={batch_size}  seed={args.seed}",
+        f"model: {os.path.abspath(args.model_path)}",
+    ]
+    write_table(txt_path, header_lines, T,
+                bounds.pce_mean, bounds.pce_se, bounds.nmc_mean, bounds.nmc_se)
+
+    logger.info(f"Saved per-step bounds to {pt_path}")
+    logger.info(f"Saved per-step table  to {txt_path}")
 
 
 if __name__ == "__main__":

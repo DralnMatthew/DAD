@@ -1,24 +1,18 @@
 #!/bin/bash -l
-#SBATCH --job-name=location_finding
-#SBATCH --output=out/%x_%j_%a.txt
-#SBATCH --partition=small-g
+
+#SBATCH --time=100:00:00
+#SBATCH --mem=50G
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=1
-#SBATCH --gpus-per-node=1
-#SBATCH --mem=64G
-#SBATCH --time=40:00:00
-#SBATCH --account=project_462001370
+#SBATCH --output=out/%x_%j_%a.txt
+#SBATCH --job-name=location
+#SBATCH --array=1
+#SBATCH --gpus=1
+#SBATCH --partition=gpu-h100-80g
+#SBATCH --mail-type=END
+#SBATCH --mail-user=zhanghu.zhao@aalto.fi
 
-export EBU_USER_PREFIX=/scratch/project_462001370/Informed-BED/env2/EasyBuild
+export PYTHONUNBUFFERED=1
 
-export WANDB_API_KEY=$(cat ~/.wandb_secret)
+cd /scratch/work/zhaoz5/DAD
 
-module --force purge
-
-module use $EBU_USER_PREFIX/modules/container
-
-module load PyTorch/2.7.1-rocm-6.2.4-python-3.12-singularity-20250827
-
-cd /scratch/project_462001370/DAD
-
-python location_finding.py wandb.use_wandb=True T=20 eval_T=20 data.theta_dist=uniform
+python location_finding.py wandb.use_wandb=True T=20 eval_T=30 data.theta_dist=uniform
